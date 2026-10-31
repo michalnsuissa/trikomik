@@ -212,7 +212,7 @@
           <p class="piece-kicker">${p.category === "birth" ? "מארז לידה בעבודת יד" : p.category === "extras" ? "מארז בעבודת יד" : "תיק סרוג בעבודת יד"}</p>
           <h1>${p.name}</h1>
           <p class="piece-price">${p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</p>
-          <p class="piece-made">כל פריט נסרג ביד, אחד-אחד 💜 מוכן בארץ ישראל</p>
+          <p class="piece-made">כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים</p>
           <a class="btn btn-primary btn-block" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה / שאילתא בוואטסאפ</a>
           <a class="btn btn-outline btn-block" href="tel:${B.phone}">${ICONS.phone} לשיחה: ${B.phoneDisplay}</a>
           <div class="piece-desc">
