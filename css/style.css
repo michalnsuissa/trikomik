@@ -448,3 +448,6 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .about-heading { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .5rem; }
 .about-heading-logo { width: 175px; height: auto; }
 
+.card-price del { font-size: .8em; opacity: .8; margin-inline-end: .35rem; font-weight: 400; }
+.piece-price del { font-size: .75em; color: var(--ink-soft); margin-inline-end: .5rem; font-weight: 400; }
+
