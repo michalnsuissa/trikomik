@@ -54,9 +54,9 @@
       <section class="hero">
         <div class="container hero-inner">
           <div class="hero-copy">
-            <p class="hero-eyebrow">סריגה בעבודת יד · מאשדוד</p>
-            <h1 class="hero-title">סרוג באהבה,<br><span class="hero-title-accent">נוצר במיוחד בשבילך.</span></h1>
-            <p class="hero-text">אני מיכל 💜 יוצרת וסורגת בעבודת יד תיקים, סלסלאות, פריטים שימושיים לבית, מארזי לידה ומתנות מיוחדות לחגים ולאנשים שאוהבים. כל פריט נוצר מחוט, מסרגה והמון אהבה.</p>
+            <img class="hero-brand-logo" src="img/trikomik-logo-transparent.png" alt="TRIKOMIK">
+            <h1 class="hero-title">סרוג באהבה<br><span class="hero-title-accent">ומדויק בשבילך</span></h1>
+            <p class="hero-text">מארזי לידה • סלסלות מעוצבות • תיקים בהתאמה אישית • סדנאות סריגה<br>הכל 100% עבודת יד</p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="#gallery-anchor">צפייה בגלריה <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
               <a class="btn btn-ghost" href="${waLink("שלום מיכל! הגעתי לאתר של TrikoMik 💜")}">שיחה בוואטסאפ</a>
@@ -73,9 +73,8 @@
 
       <section class="about container" id="about">
         <div class="about-card">
-          <img class="about-logo" src="${B.logo}" alt="לוגו TrikoMik">
           <div>
-            <h2>ברוכים הבאים ל-TrikoMik</h2>
+            <h2 class="about-heading"><span>ברוכים הבאים ל־</span><img class="about-heading-logo" src="${B.logo}" alt="TrikoMik"></h2>
             <p>${TRIKOMIK.brand.description.replace(/^ברוכים הבאים ל-TrikoMik 💜 /, "")}</p>
             <div class="about-social">
               <a href="${B.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.instagram}<span>Instagram</span></a>
@@ -149,7 +148,7 @@
   function renderGrid(cat) {
     const items = TRIKOMIK.products.filter(
       (p) => cat === "all" || p.category === cat
-    );
+    ).sort((a, b) => ({ bags: 0, birth: 1, extras: 2 }[a.category] ?? 3) - ({ bags: 0, birth: 1, extras: 2 }[b.category] ?? 3));
     $("#grid-empty").hidden = items.length > 0;
     $("#grid").innerHTML = items
       .map(
@@ -165,7 +164,7 @@
           }
         </span>
         <span class="card-body">
-          <span class="card-cat">${p.category === "birth" ? "מארז לידה" : "תיק סרוג"}</span>
+          <span class="card-cat">${p.category === "birth" ? "מארז לידה" : p.category === "extras" ? "מוצרים משלימים ומארזים" : "תיק סרוג"}</span>
           <span class="card-name">${p.name}</span>
           <span class="card-more">לפרטי הפריט ←</span>
         </span>
@@ -210,7 +209,7 @@
           }
         </div>
         <div class="piece-info">
-          <p class="piece-kicker">${p.category === "birth" ? "מארז לידה בעבודת יד" : "תיק סרוג בעבודת יד"}</p>
+          <p class="piece-kicker">${p.category === "birth" ? "מארז לידה בעבודת יד" : p.category === "extras" ? "מארז בעבודת יד" : "תיק סרוג בעבודת יד"}</p>
           <h1>${p.name}</h1>
           <p class="piece-price">${fmt(p.price)}</p>
           <p class="piece-made">כל פריט נסרג ביד, אחד-אחד 💜 מוכן בארץ ישראל</p>
@@ -360,3 +359,4 @@
 
   navigate();
 })();
+
