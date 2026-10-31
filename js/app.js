@@ -19,6 +19,7 @@
     return { route: routes[route] ? route : "", param };
   }
 
+  let stopHeroCarousel = () => {};
   function navigate() {
     const hash = location.hash;
     /* in-page anchors (#about, #policy) — let the browser scroll natively */
@@ -26,6 +27,7 @@
       if ($("#app").children.length === 0) home(); /* first land with anchor hash */
       return;
     }
+    stopHeroCarousel();
     const { route, param } = parseHash();
     window.scrollTo(0, 0);
     if (route === "piece") piece(param);
@@ -48,7 +50,8 @@
   function home() {
     document.title = "TrikoMik — סרוג באהבה, נוצר במיוחד בשבילך";
     const app = $("#app");
-    const featured = TRIKOMIK.products.filter((p) => p.featured);
+    const slides = TRIKOMIK.products.flatMap(p => p.images.map(src => ({ src, name: p.name, slug: p.slug })));
+    for (let i = slides.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [slides[i], slides[j]] = [slides[j], slides[i]]; }
 
     app.innerHTML = `
       <section class="hero">
@@ -62,11 +65,14 @@
               <a class="btn btn-ghost" href="${waLink("שלום מיכל! הגעתי לאתר של TrikoMik 💜")}">שיחה בוואטסאפ</a>
             </div>
           </div>
-          <div class="hero-art" aria-hidden="true">
-            <div class="yarn-circle"></div>
-            <img src="${featured[2].images[0]}" alt="" loading="eager" class="hero-img hero-img-1">
-            <img src="${featured[0].images[0]}" alt="" loading="eager" class="hero-img hero-img-2">
-            <img src="${TRIKOMIK.products.find(p=>p.category==="birth").images[0]}" alt="" loading="eager" class="hero-img hero-img-3">
+          <div class="hero-art hero-carousel" role="region" aria-roledescription="קרוסלה" aria-label="מוצרים מהגלריה">
+            <a class="hero-slide" href="#/piece/${slides[0].slug}"><img src="${slides[0].src}" alt="${slides[0].name}" loading="eager"><span class="hero-slide-name">${slides[0].name}</span></a>
+            <div class="hero-carousel-controls">
+              <button type="button" class="hero-prev" aria-label="תמונה קודמת">→</button>
+              <button type="button" class="hero-pause" aria-label="השהיית החלפה אוטומטית">השהיה</button>
+              <span class="hero-slide-count" aria-live="off">1 / ${slides.length}</span>
+              <button type="button" class="hero-next" aria-label="תמונה הבאה">←</button>
+            </div>
           </div>
         </div>
       </section>
@@ -131,6 +137,23 @@
       </section>
     `;
 
+    const carousel = $(".hero-carousel");
+    let current = 0, paused = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const showSlide = (step) => {
+      current = (current + step + slides.length) % slides.length;
+      const slide = slides[current], link = $(".hero-slide", carousel), img = $("img", link);
+      img.src = slide.src; img.alt = slide.name; link.href = `#/piece/${slide.slug}`;
+      $(".hero-slide-name", carousel).textContent = slide.name;
+      $(".hero-slide-count", carousel).textContent = `${current + 1} / ${slides.length}`;
+    };
+    const pauseButton = $(".hero-pause", carousel);
+    const syncPause = () => { pauseButton.textContent = paused ? "הפעלה" : "השהיה"; pauseButton.setAttribute("aria-label", paused ? "הפעלת החלפה אוטומטית" : "השהיית החלפה אוטומטית"); };
+    syncPause();
+    pauseButton.onclick = () => { paused = !paused; syncPause(); };
+    $(".hero-prev", carousel).onclick = () => showSlide(-1);
+    $(".hero-next", carousel).onclick = () => showSlide(1);
+    const timer = setInterval(() => { if (!paused && !document.hidden && !carousel.matches(":hover") && !carousel.contains(document.activeElement)) showSlide(1); }, 4500);
+    stopHeroCarousel = () => clearInterval(timer);
     renderGrid("all");
     $$(".chip").forEach((chip) =>
       chip.addEventListener("click", () => {
