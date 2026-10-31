@@ -4,8 +4,8 @@ const TRIKOMIK = {
     name: "TrikoMik",
     tagline: "סרוג באהבה, נוצר במיוחד בשבילך.",
     description:
-      "ברוכים הבאים ל-TrikoMik 💜 אני מיכל — יוצרת וסורגת בעבודת יד תיקים, סלסלאות, פריטים שימושיים לבית, מארזי לידה ומתנות מיוחדות לחגים ולאנשים שאוהבים. כל פריט נוצר מחוט, מסרגה והמון אהבה. מוזמנים לעיין במוצרים, למצוא את הפריט שמתאים לכם או ליצור איתי קשר לכל שאלה והתאמה אישית.",
-    logo: "img/logo.png",
+      "ברוכים הבאים ל-TrikoMik 💜 אני מיכל, יוצרת וסורגת בעבודת יד תיקים, סלסלאות, פריטים שימושיים לבית, מארזי לידה ומתנות מיוחדות לחגים ולאנשים שאוהבים. כל פריט נוצר מחוט, מסרגה והמון אהבה. מוזמנים לעיין במוצרים, למצוא את הפריט שמתאים לכם וליצור איתי קשר להמשך הרכישה ולהזמנה ייחודית בהתאמה אישית.",
+    logo: "img/trikomik-logo-transparent.png",
     phone: "+972529698082",
     phoneDisplay: "052-969-8082",
     whatsapp: "https://wa.me/972529698082",
@@ -18,6 +18,7 @@ const TRIKOMIK = {
     { id: "all", label: "הכול" },
     { id: "bags", label: "תיקים סרוגים" },
     { id: "birth", label: "מארזי לידה" },
+    { id: "extras", label: "מוצרים משלימים ומארזים" },
   ],
 
   delivery:
@@ -44,6 +45,21 @@ const TRIKOMIK = {
   ],
 
   products: [
+    {
+      slug: "honey-home", name: "מארז Honey & Home", shortName: "Honey & Home", category: "extras", price: 120,
+      images: ["img/honey-home.jpg"], color: "#d9dce7",
+      description: ["תחתית סרוגה לסיר בעבודת יד, זוג כפות עץ, צנצנת דבש וחליטה מפנקת.", "מתנה מקסימה למארחים, למשפחה או פשוט למישהו שרוצים לשמח"], specs: []
+    },
+    {
+      slug: "golden-table", name: "מארז Golden Table", shortName: "Golden Table", category: "extras", price: 220,
+      images: ["img/golden-table.jpg"], color: "#d8b651",
+      description: ["מארז חגיגי ושימושי בעבודת יד, סרוג מחוטי טריקו בגווני חרדל ושחור שילוב שמוסיף המון אופי וסטייל לשולחן.", "המארז כולל: סלסלה לסכו״ם, תחתית לסיר ו־4 תחתיות תואמות לכוסות.", "כל פריט נסרג בעבודת יד ובתשומת לב לפרטים, ליצירת סט מושלם לאירוח או כמתנה מיוחדת לחג"], specs: []
+    },
+    {
+      slug: "olive-home", name: "מארז Olive Home", shortName: "Olive Home", category: "extras", price: 220,
+      images: ["img/olive-home.jpg"], color: "#8e9753",
+      description: ["מארז מלא בסטייל וחום של עבודת יד, מושלם כמתנה לחג, למארחים או פשוט לפינוק לבית 🤍", "המארז כולל:", "• תחתית סרוגה לסיר בעבודת יד", "• 4 תחתיות סרוגות לכוסות קפה", "• 2 כלי בישול ואפייה מעוצבים", "• אריזה חגיגית ומוכנה למתנה 🎁", "כל פריט סרוג בעבודת יד באהבה ובתשומת לב לפרטים"], specs: []
+    },
     {
       slug: "noa-bag",
       name: "תיק Noa",
@@ -477,3 +493,4 @@ const TRIKOMIK = {
 
 /* fix real slugs where I renamed */
 TRIKOMIK.products.forEach((p) => { if (p.slugReal) p.slug = p.slugReal; delete p.slugReal; });
+
