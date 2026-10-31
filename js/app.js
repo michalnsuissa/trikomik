@@ -156,7 +156,7 @@
       <a class="card ${p.category === "birth" ? "card-tall" : ""}" href="#/piece/${p.slug}" style="--i:${i}; animation-delay:${Math.min(i * 35, 280)}ms">
         <span class="card-media">
           <img src="${p.images[0]}" alt="${p.name}" loading="lazy" style="--tint:${p.color}">
-          <span class="card-price">${fmt(p.price)}</span>
+          <span class="card-price">${p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</span>
           ${
             p.images.length > 1
               ? `<span class="card-multi">${ICONS.stack} ${p.images.length} תמונות</span>`
@@ -211,7 +211,7 @@
         <div class="piece-info">
           <p class="piece-kicker">${p.category === "birth" ? "מארז לידה בעבודת יד" : p.category === "extras" ? "מארז בעבודת יד" : "תיק סרוג בעבודת יד"}</p>
           <h1>${p.name}</h1>
-          <p class="piece-price">${fmt(p.price)}</p>
+          <p class="piece-price">${p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</p>
           <p class="piece-made">כל פריט נסרג ביד, אחד-אחד 💜 מוכן בארץ ישראל</p>
           <a class="btn btn-primary btn-block" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה / שאילתא בוואטסאפ</a>
           <a class="btn btn-outline btn-block" href="tel:${B.phone}">${ICONS.phone} לשיחה: ${B.phoneDisplay}</a>
