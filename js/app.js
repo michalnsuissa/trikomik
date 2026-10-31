@@ -69,7 +69,6 @@
             <a class="hero-slide" href="#/piece/${slides[0].slug}"><img src="${slides[0].src}" alt="${slides[0].name}" loading="eager"><span class="hero-slide-name">${slides[0].name}</span></a>
             <div class="hero-carousel-controls">
               <button type="button" class="hero-prev" aria-label="תמונה קודמת">→</button>
-              <button type="button" class="hero-pause" aria-label="השהיית החלפה אוטומטית">השהיה</button>
               <span class="hero-slide-count" aria-live="off">1 / ${slides.length}</span>
               <button type="button" class="hero-next" aria-label="תמונה הבאה">←</button>
             </div>
@@ -139,21 +138,30 @@
 
     const carousel = $(".hero-carousel");
     let current = 0, paused = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const showSlide = (step) => {
-      current = (current + step + slides.length) % slides.length;
-      const slide = slides[current], link = $(".hero-slide", carousel), img = $("img", link);
+    let transitioning = false, disposed = false;
+    const showSlide = async (step) => {
+      if (transitioning || disposed) return;
+      transitioning = true;
+      const next = (current + step + slides.length) % slides.length;
+      const slide = slides[next], link = $(".hero-slide", carousel), img = $("img", link);
+      const preload = new Image(); preload.src = slide.src;
+      try { await preload.decode(); } catch { transitioning = false; return; }
+      if (disposed) return;
+      const old = img.cloneNode();
+      old.className = "hero-slide-outgoing"; old.alt = ""; old.setAttribute("aria-hidden", "true");
+      link.append(old);
+      current = next;
       img.src = slide.src; img.alt = slide.name; link.href = `#/piece/${slide.slug}`;
       $(".hero-slide-name", carousel).textContent = slide.name;
       $(".hero-slide-count", carousel).textContent = `${current + 1} / ${slides.length}`;
-    };
-    const pauseButton = $(".hero-pause", carousel);
-    const syncPause = () => { pauseButton.textContent = paused ? "הפעלה" : "השהיה"; pauseButton.setAttribute("aria-label", paused ? "הפעלת החלפה אוטומטית" : "השהיית החלפה אוטומטית"); };
-    syncPause();
-    pauseButton.onclick = () => { paused = !paused; syncPause(); };
-    $(".hero-prev", carousel).onclick = () => showSlide(-1);
+      const duration = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 750;
+      const fade = old.animate([{ opacity: 1 }, { opacity: 0 }], { duration, easing: "ease-in-out", fill: "forwards" });
+      await fade.finished.catch(() => {});
+      old.remove(); transitioning = false;
+    };    $(".hero-prev", carousel).onclick = () => showSlide(-1);
     $(".hero-next", carousel).onclick = () => showSlide(1);
     const timer = setInterval(() => { if (!paused && !document.hidden && !carousel.matches(":hover") && !carousel.contains(document.activeElement)) showSlide(1); }, 4500);
-    stopHeroCarousel = () => clearInterval(timer);
+    stopHeroCarousel = () => { disposed = true; clearInterval(timer); };
     renderGrid("all");
     $$(".chip").forEach((chip) =>
       chip.addEventListener("click", () => {
