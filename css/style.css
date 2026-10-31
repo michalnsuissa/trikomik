@@ -420,7 +420,7 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 /* ---------- responsive ---------- */
 @media (max-width: 920px) {
   .hero-inner { grid-template-columns: 1fr; }
-  .hero-art { min-height: 380px; order: -1; margin-top: -1rem; }
+  .hero-art { min-height: 380px; order: 0; margin-top: 0; }
   .about-card { flex-direction: column; text-align: center; gap: 1.2rem; }
   .policy-grid { grid-template-columns: 1fr; }
   .piece { grid-template-columns: 1fr; gap: 1.8rem; }
@@ -459,4 +459,6 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .hero-carousel-controls button { min-width: 44px; min-height: 44px; border: 1px solid #d9cbe8; border-radius: 24px; background: var(--card); color: var(--purple-deep); cursor: pointer; font: inherit; padding: .4rem .8rem; }
 .hero-carousel-controls button:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; }
 .hero-slide-count { direction: ltr; color: var(--ink-soft); font-size: .85rem; }
+
+.hero-slide img.hero-slide-outgoing { position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; }
 
