@@ -24,7 +24,8 @@
     const hash = location.hash;
     /* in-page anchors (#about, #policy) — let the browser scroll natively */
     if (hash && hash[1] !== "/") {
-      if ($("#app").children.length === 0) home(); /* first land with anchor hash */
+      if (!$(".hero", $("#app"))) home(); /* render home before resolving an anchor */
+      requestAnimationFrame(() => document.getElementById(hash.slice(1))?.scrollIntoView());
       return;
     }
     stopHeroCarousel();
@@ -115,8 +116,9 @@
             <p>${TRIKOMIK.delivery}</p>
           </div>
           <div class="policy-block">
-            <h3><span class="icon">${ICONS.return}</span> מדיניות החזרות</h3>
+            <h3><span class="icon">${ICONS.return}</span> מדיניות ביטולים והחזרות</h3>
             <p>${TRIKOMIK.returnPolicyMain}</p>
+            <a class="btn btn-outline" href="${waLink("שלום מיכל, אבקש לבטל הזמנה. השם שלי: ____; פרטי ההזמנה: ____")}" target="_blank" rel="noopener">בקשת ביטול הזמנה</a>
             <ul class="policy-list">
               ${TRIKOMIK.returnPolicy
                 .map((r) => `<li><strong>${r.title}:</strong> ${r.text}</li>`)
@@ -160,7 +162,7 @@
       old.remove(); transitioning = false;
     };    $(".hero-prev", carousel).onclick = () => showSlide(-1);
     $(".hero-next", carousel).onclick = () => showSlide(1);
-    const timer = setInterval(() => { if (!paused && !document.hidden && !carousel.matches(":hover") && !carousel.contains(document.activeElement)) showSlide(1); }, 4500);
+    const timer = setInterval(() => { if (!paused && !document.documentElement.classList.contains("a11y-motion") && !matchMedia("(prefers-reduced-motion: reduce)").matches && !document.hidden && !carousel.matches(":hover") && !carousel.contains(document.activeElement)) showSlide(1); }, 4500);
     stopHeroCarousel = () => { disposed = true; clearInterval(timer); };
     renderGrid("all");
     $$(".chip").forEach((chip) =>

@@ -1,0 +1,16 @@
+.accessibility-tools { position: fixed; bottom: 18px; inset-inline-end: 18px; z-index: 90; font-family: Heebo, sans-serif; }
+.accessibility-toggle { background: #56357d; color: #fff; border: 2px solid white; padding: .7rem 1rem; border-radius: 30px; box-shadow: 0 3px 15px #0003; font-size: 1rem; cursor: pointer; min-height: 48px; }
+#accessibility-panel { position: absolute; bottom: 65px; inset-inline-end: 0; width: min(320px, calc(100vw - 36px)); max-height: 70vh; overflow-y: auto; background: #fff; color: #26202c; border: 2px solid #56357d; border-radius: 18px; padding: 1rem; box-shadow: 0 8px 30px #0003; }
+#accessibility-panel[hidden] { display: none; }
+#accessibility-panel h2 { font-size: 1.25rem; margin-bottom: .7rem; }
+#accessibility-panel button { display: block; width: 100%; min-height: 44px; margin: .4rem 0; border: 1px solid #71518f; border-radius: 8px; padding: .5rem; background: #fff; color: #30203e; cursor: pointer; font: inherit; }
+#accessibility-panel button[aria-pressed=true] { background: #56357d; color: #fff; }
+#accessibility-panel p { font-size: .85rem; margin: .8rem 0; }
+#accessibility-panel a { color: #56357d; text-decoration: underline; }
+:focus-visible { outline: 3px solid #7347ad; outline-offset: 4px; }
+html.a11y-large { font-size: 125%; }
+html.a11y-links a { text-decoration: underline !important; text-underline-offset: .2em; }
+html.a11y-contrast body, html.a11y-contrast body *:not(img):not(svg):not(path) { background-color: #000 !important; color: #fff !important; border-color: #fff !important; text-shadow: none !important; }
+html.a11y-contrast a { color: #ffeb5c !important; }
+html.a11y-motion *, html.a11y-motion *::before, html.a11y-motion *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+@media(prefers-reduced-motion:reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
