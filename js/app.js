@@ -62,11 +62,11 @@
             <h1 class="hero-title">סרוג באהבה<br><span class="hero-title-accent">ומדויק בשבילך</span></h1>
             <p class="hero-text">מארזי לידה • סלסלות מעוצבות • תיקים בהתאמה אישית • סדנאות סריגה<br>הכל 100% עבודת יד</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#gallery-anchor">צפייה בגלריה <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
+              <a class="btn btn-primary" href="#gallery-anchor">צפייה בחנות <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
               <a class="btn btn-ghost" href="${waLink("שלום מיכל! הגעתי לאתר של TrikoMik 💜")}">שיחה בוואטסאפ</a>
             </div>
           </div>
-          <div class="hero-art hero-carousel" role="region" aria-roledescription="קרוסלה" aria-label="מוצרים מהגלריה">
+          <div class="hero-art hero-carousel" role="region" aria-roledescription="קרוסלה" aria-label="מוצרים מהחנות">
             <a class="hero-slide" href="#/piece/${slides[0].slug}"><img src="${slides[0].src}" alt="${slides[0].name}" loading="eager"><span class="hero-slide-name">${slides[0].name}</span></a>
             <div class="hero-carousel-controls">
               <button type="button" class="hero-pause" aria-pressed="false">השהיית תמונות</button>
@@ -95,7 +95,7 @@
 
       <section class="gallery container" id="gallery-anchor">
         <div class="gallery-head">
-          <h2>הגלריה</h2>
+          <h2>החנות</h2>
           <p>כל פריט נסרג ביד, אחד לאחד. לחיצה על פריט תפתח את כל הפרטים והמידות</p>
           <div class="filter-chips" role="group" aria-label="סינון לפי קטגוריה">
             ${TRIKOMIK.categories
@@ -225,7 +225,7 @@
     const app = $("#app");
     app.innerHTML = `
       <nav class="crumbs container" aria-label="מיקום באתר">
-        <a href="#/">הגלריה</a><span>/</span><span>${p.name}</span>
+        <a href="#/">החנות</a><span>/</span><span>${p.name}</span>
       </nav>
       <section class="piece container">
         <div class="piece-gallery">
@@ -286,7 +286,7 @@
           </div>
           <div class="piece-nav">
             <a href="#/piece/${prev.slug}" class="piece-navlink">→ ${prev.name}</a>
-            <a href="#/" class="piece-navlink">הגלריה</a>
+            <a href="#/" class="piece-navlink">החנות</a>
             <a href="#/piece/${next.slug}" class="piece-navlink">${next.name} ←</a>
           </div>
         </div>
