@@ -169,6 +169,9 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .about-logo { width: 130px; flex-shrink: 0; filter: drop-shadow(0 4px 10px rgba(58,34,92,.18)); }
 .about-card h2 { font-family: var(--font-display); font-size: 1.75rem; color: var(--purple-deep); margin-bottom: 0.6rem; }
 .about-card p { color: var(--ink-soft); max-width: 46rem; margin-inline: auto; }
+.about-personal { margin-top: 1.6rem; }
+.about-personal h3 { color: var(--purple-deep); font-family: var(--font-display); font-size: 1.4rem; margin-bottom: .7rem; }
+.about-personal p + p { margin-top: .8rem; }
 .about-social { display: flex; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; justify-content: center; }
 .about-social a {
   display: inline-flex; align-items: center; gap: 0.45rem;
