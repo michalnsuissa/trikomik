@@ -69,6 +69,7 @@
           <div class="hero-art hero-carousel" role="region" aria-roledescription="קרוסלה" aria-label="מוצרים מהגלריה">
             <a class="hero-slide" href="#/piece/${slides[0].slug}"><img src="${slides[0].src}" alt="${slides[0].name}" loading="eager"><span class="hero-slide-name">${slides[0].name}</span></a>
             <div class="hero-carousel-controls">
+              <button type="button" class="hero-pause" aria-pressed="false">השהיית תמונות</button>
               <button type="button" class="hero-prev" aria-label="תמונה קודמת">→</button>
               <span class="hero-slide-count" aria-live="off">1 / ${slides.length}</span>
               <button type="button" class="hero-next" aria-label="תמונה הבאה">←</button>
@@ -96,16 +97,17 @@
         <div class="gallery-head">
           <h2>הגלריה</h2>
           <p>כל פריט נסרג ביד, אחד לאחד. לחיצה על פריט תפתח את כל הפרטים והמידות</p>
-          <div class="filter-chips" role="tablist" aria-label="סינון לפי קטגוריה">
+          <div class="filter-chips" role="group" aria-label="סינון לפי קטגוריה">
             ${TRIKOMIK.categories
               .map(
                 (c, i) =>
-                  `<button class="chip ${i === 0 ? "active" : ""}" role="tab" aria-selected="${i === 0}" data-cat="${c.id}">${c.label}</button>`
+                  `<button class="chip ${i === 0 ? "active" : ""}" aria-pressed="${i === 0}" data-cat="${c.id}">${c.label}</button>`
               )
               .join("")}
           </div>
         </div>
         <div class="grid" id="grid"></div>
+        <p id="gallery-status" class="sr-only" role="status"></p>
         <div id="grid-empty" class="grid-empty" hidden>אין פריטים בקטגוריה הזו כרגע</div>
       </section>
 
@@ -115,8 +117,8 @@
             <h3><span class="icon">${ICONS.truck}</span> משלוחים</h3>
             <p>${TRIKOMIK.delivery}</p>
           </div>
-          <div class="policy-block">
-            <h3><span class="icon">${ICONS.return}</span> מדיניות ביטולים והחזרות</h3>
+          <details class="policy-block policy-disclosure">
+            <summary>מדיניות ביטולים והחזרות</summary>
             <p>${TRIKOMIK.returnPolicyMain}</p>
             <a class="btn btn-outline" href="${waLink("שלום מיכל, אבקש לבטל הזמנה. השם שלי: ____; פרטי ההזמנה: ____")}" target="_blank" rel="noopener">בקשת ביטול הזמנה</a>
             <ul class="policy-list">
@@ -124,7 +126,7 @@
                 .map((r) => `<li><strong>${r.title}:</strong> ${r.text}</li>`)
                 .join("")}
             </ul>
-          </div>
+          </details>
         </div>
       </section>
 
@@ -140,6 +142,10 @@
 
     const carousel = $(".hero-carousel");
     let current = 0, paused = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const pauseButton = $(".hero-pause", carousel);
+    const syncPause = () => { pauseButton.setAttribute("aria-pressed", String(paused)); pauseButton.textContent = paused ? "הפעלת תמונות" : "השהיית תמונות"; };
+    pauseButton.onclick = () => { paused = !paused; syncPause(); };
+    syncPause();
     let transitioning = false, disposed = false;
     const showSlide = async (step) => {
       if (transitioning || disposed) return;
@@ -156,7 +162,7 @@
       img.src = slide.src; img.alt = slide.name; link.href = `#/piece/${slide.slug}`;
       $(".hero-slide-name", carousel).textContent = slide.name;
       $(".hero-slide-count", carousel).textContent = `${current + 1} / ${slides.length}`;
-      const duration = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 750;
+      const duration = matchMedia("(prefers-reduced-motion: reduce)").matches || document.documentElement.classList.contains("a11y-motion") ? 0 : 750;
       const fade = old.animate([{ opacity: 1 }, { opacity: 0 }], { duration, easing: "ease-in-out", fill: "forwards" });
       await fade.finished.catch(() => {});
       old.remove(); transitioning = false;
@@ -169,10 +175,10 @@
       chip.addEventListener("click", () => {
         $$(".chip").forEach((c) => {
           c.classList.remove("active");
-          c.setAttribute("aria-selected", "false");
+          c.setAttribute("aria-pressed", "false");
         });
         chip.classList.add("active");
-        chip.setAttribute("aria-selected", "true");
+        chip.setAttribute("aria-pressed", "true");
         renderGrid(chip.dataset.cat);
       })
     );
@@ -183,6 +189,7 @@
       (p) => cat === "all" || p.category === cat
     ).sort((a, b) => ({ bags: 0, birth: 1, extras: 2 }[a.category] ?? 3) - ({ bags: 0, birth: 1, extras: 2 }[b.category] ?? 3));
     $("#grid-empty").hidden = items.length > 0;
+    $("#gallery-status").textContent = `מוצגים ${items.length} פריטים`;
     $("#grid").innerHTML = items
       .map(
         (p, i) => `
@@ -217,7 +224,7 @@
     document.title = `${p.name} — TrikoMik`;
     const app = $("#app");
     app.innerHTML = `
-      <nav class="crumbs container">
+      <nav class="crumbs container" aria-label="מיקום באתר">
         <a href="#/">הגלריה</a><span>/</span><span>${p.name}</span>
       </nav>
       <section class="piece container">
@@ -253,14 +260,14 @@
           </div>
           ${
             p.details
-              ? `<h3 class="piece-sub">פרטים</h3>
+              ? `<h2 class="piece-sub">פרטים</h2>
                  <ul class="piece-details">${p.details.map((d) => `<li>${d}</li>`).join("")}</ul>`
               : ""
           }
           ${p.note ? `<p class="piece-note">${p.note}</p>` : ""}
           ${
             p.specs.length
-              ? `<h3 class="piece-sub">מאפיינים</h3>
+              ? `<h2 class="piece-sub">מאפיינים</h2>
                  <dl class="piece-specs">
                    ${p.specs
                      .map(
@@ -303,6 +310,14 @@
       updateExtras();
     }
 
+    const imageButtons = $$(".piece-gallery img");
+    imageButtons.forEach(img => { img.tabIndex = 0; img.setAttribute("role", "button"); img.setAttribute("aria-label", "הגדלת תמונת " + p.name); });
+    const gallery = $(".piece-gallery");
+    gallery.addEventListener("keydown", event => {
+      if (event.target.matches("img[role=button]") && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault(); openLightbox(event.target.src);
+      }
+    });
     /* multi-image slider */
     const trackImgs = $$(".pg-track img");
     if (trackImgs.length) {
@@ -310,7 +325,7 @@
       let cur = 0;
       const show = (i) => {
         cur = (i + trackImgs.length) % trackImgs.length;
-        trackImgs.forEach((img, k) => img.classList.toggle("active", k === cur));
+        trackImgs.forEach((img, k) => { img.classList.toggle("active", k === cur); img.tabIndex = k === cur ? 0 : -1; img.setAttribute("aria-hidden", String(k !== cur)); });
         dots.forEach((d, k) => d.classList.toggle("active", k === cur));
       };
       show(0);
@@ -327,8 +342,8 @@
         show(cur + 1);
       });
       /* keyboard support while detail view is visible */
-      document.addEventListener("keydown", (e) => {
-        if (!location.hash.startsWith("#/piece")) return;
+      gallery.addEventListener("keydown", (e) => {
+        if (!e.target.matches("img[role=button]")) return;
         if (e.key === "ArrowLeft") show(cur + 1);   /* RTL: left = next */
         if (e.key === "ArrowRight") show(cur - 1);  /* RTL: right = prev */
       });
@@ -358,22 +373,31 @@
         </div>
         <p class="extras-caption">התוספת כוללת בלון הליום אחד. התמונות להמחשת הדגמים.</p>
       </fieldset>
-      <p class="extras-summary">סה״כ כולל התוספות: <strong class="extras-total">${fmt(p.price)}</strong><small>לפני משלוח</small></p>
+      <p class="extras-summary" role="status" aria-atomic="true">סה״כ כולל התוספות: <strong class="extras-total">${fmt(p.price)}</strong><small>לפני משלוח</small></p>
       <a class="btn btn-primary btn-block" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנת המארז עם הבחירות שלי</a>
     </section>`;
   }
 
+  let lightboxOrigin = null, lightboxInert = [];
   /* ---------- lightbox ---------- */
   function openLightbox(src) {
     const lb = $("#lightbox");
+    lightboxOrigin = document.activeElement;
     $("#lightbox-img").src = src;
+    $("#lightbox-img").alt = $(".piece-info h1")?.textContent || "תמונת מוצר מוגדלת";
+    lb.setAttribute("aria-hidden", "false");
+    [...document.body.children].filter(el => el !== lb && !["SCRIPT", "LINK"].includes(el.tagName)).forEach(el => { if (!el.inert) { el.inert = true; lightboxInert.push(el); } });
     lb.classList.add("open");
     document.body.style.overflow = "hidden";
-    $("#lightbox").focus();
+    $(".lb-close", lb).focus();
   }
   function closeLightbox() {
     const lb = $("#lightbox");
+    if (!lb.classList.contains("open")) return;
     lb.classList.remove("open");
+    lb.setAttribute("aria-hidden", "true");
+    lightboxInert.forEach(el => el.inert = false); lightboxInert = [];
+    lightboxOrigin?.focus();
     document.body.style.overflow = "";
     $("#lightbox-img").src = "";
   }
@@ -411,7 +435,10 @@
   `;
   $("#lightbox").addEventListener("click", closeLightbox);
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeLightbox();
+    if ($("#lightbox").classList.contains("open")) {
+      if (e.key === "Escape") { e.stopImmediatePropagation(); closeLightbox(); }
+      if (e.key === "Tab") { e.preventDefault(); $(".lb-close").focus(); }
+    }
   });
 
   /* mark footer year + social */
@@ -427,6 +454,16 @@
     `;
   }
 
+  const enhanceContent = () => {
+    $$(".piece-social a").forEach(link => link.setAttribute("aria-label", link.href.includes("instagram") ? "Instagram" : link.href.includes("facebook") ? "Facebook" : "TikTok"));
+    $$("svg").forEach(svg => { svg.setAttribute("aria-hidden", "true"); svg.setAttribute("focusable", "false"); });
+  };
+  new MutationObserver(enhanceContent).observe($("#app"), {childList:true, subtree:true});
+  window.addEventListener("hashchange", () => {
+    const target = location.hash.startsWith("#/") ? $("#app h1") : document.getElementById(location.hash.slice(1));
+    if (target) { target.tabIndex = -1; target.focus({preventScroll:true}); }
+  });
   navigate();
+  enhanceContent();
 })();
 

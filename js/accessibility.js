@@ -13,6 +13,7 @@
       <button type="button" data-reset>איפוס הגדרות</button>
       <p>לקבלת עזרה או לדיווח על קושי בנגישות: <a href="tel:+972529698082">052-969-8082</a></p>
       <p>אפשרויות התצוגה אינן תחליף לבדיקת נגישות מלאה של האתר.</p>
+      <p><a href="#accessibility-statement" data-statement>הצהרת נגישות ופרטי קשר</a></p>
       <button type="button" data-close>סגירה</button>
     </section>`;
   document.body.append(host);
@@ -39,6 +40,12 @@
   }));
   host.querySelector('[data-reset]').addEventListener('click', () => { settings = {}; apply(); });
   host.querySelector('[data-close]').addEventListener('click', close);
+  host.querySelector('[data-statement]').addEventListener('click', () => {
+    close();
+    const statement = document.getElementById('accessibility-statement');
+    statement.open = true;
+    statement.querySelector('summary').focus();
+  });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && !panel.hidden) close(); });
   apply();
 })();

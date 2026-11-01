@@ -14,3 +14,32 @@ html.a11y-contrast body, html.a11y-contrast body *:not(img):not(svg):not(path) {
 html.a11y-contrast a { color: #ffeb5c !important; }
 html.a11y-motion *, html.a11y-motion *::before, html.a11y-motion *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 @media(prefers-reduced-motion:reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+/* Baseline accessibility applies even when display controls are closed. */
+:root { --gold: #806016; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.skip-link { position: fixed; top: 8px; right: 8px; transform: translateY(-180%); z-index: 200; padding: .8rem 1.2rem; color: white; background: #472b6b; border-radius: 8px; }
+.skip-link:focus { transform: none; }
+[id] { scroll-margin-top: 100px; }
+.policy-disclosure summary, .accessibility-statement summary { cursor: pointer; color: var(--purple-deep); font-weight: 700; padding: .6rem; min-height: 44px; }
+.policy-disclosure summary { font-size: 1.12rem; }
+.policy-disclosure[open] summary { margin-bottom: .8rem; }
+.policy-list, .policy-disclosure > p { text-align: start; }
+.policy-list { font-size: 1rem; }
+.footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem 0; }
+.footer-nav a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; color: var(--purple-deep); }
+.accessibility-statement { max-width: 760px; margin: 1rem auto; text-align: start; }
+.accessibility-statement p { margin: .8rem 0; }
+.accessibility-statement a { text-decoration: underline; }
+.piece-social a, .social-row a { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; opacity: 1; }
+.pg-dots button { width: 24px; height: 24px; border: 2px solid #472b6b; background: white; }
+.pg-dots button.active { background: #472b6b; scale: 1; }
+.piece-gallery img[role=button]:focus-visible { outline-offset: -6px; }
+.lb-close { min-width: 48px; min-height: 48px; }
+.grid { min-width: 0; }
+.piece > *, .hero-inner > *, .policy-grid > * { min-width: 0; }
+.card-name, .piece-info h1, .btn, .piece-navlink { overflow-wrap: anywhere; }
+.hero-carousel-controls { flex-wrap: wrap; }
+.site-footer { padding-bottom: 100px; }
+@media(max-width:560px) { .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .accessibility-tools { bottom: 12px; inset-inline-end: 12px; } }
+@media(max-width:360px) { .grid { grid-template-columns: 1fr; } .header-inner { flex-wrap: wrap; } }
