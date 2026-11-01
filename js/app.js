@@ -189,6 +189,7 @@
       (p) => cat === "all" || p.category === cat
     ).sort((a, b) => ({ bags: 0, birth: 1, gifts: 2, extras: 3 }[a.category] ?? 3) - ({ bags: 0, birth: 1, gifts: 2, extras: 3 }[b.category] ?? 3));
     $("#grid-empty").hidden = items.length > 0;
+    $("#grid-empty").textContent = cat === "extras" ? "תמונה בקרוב" : "אין פריטים בקטגוריה הזו כרגע";
     $("#gallery-status").textContent = `מוצגים ${items.length} פריטים`;
     $("#grid").innerHTML = items
       .map(
