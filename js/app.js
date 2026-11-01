@@ -187,7 +187,7 @@
   function renderGrid(cat) {
     const items = TRIKOMIK.products.filter(
       (p) => cat === "all" || p.category === cat
-    ).sort((a, b) => ({ bags: 0, birth: 1, gifts: 2, extras: 3 }[a.category] ?? 3) - ({ bags: 0, birth: 1, gifts: 2, extras: 3 }[b.category] ?? 3));
+    ).sort((a, b) => ({ bags: 0, birth: 1, gifts: 2, extras: 3, workshops: 4 }[a.category] ?? 3) - ({ bags: 0, birth: 1, gifts: 2, extras: 3, workshops: 4 }[b.category] ?? 3));
     $("#grid-empty").hidden = items.length > 0;
     $("#grid-empty").innerHTML = cat === "extras" ? '<img src="img/complementary-coming-soon.svg" alt="בקרוב — מוצרים משלימים בעבודת יד" width="800" height="600" style="width:min(100%,480px);height:auto;margin-inline:auto">' : "אין פריטים בקטגוריה הזו כרגע";
     $("#gallery-status").textContent = `מוצגים ${items.length} פריטים`;
@@ -205,13 +205,17 @@
           }
         </span>
         <span class="card-body">
-          <span class="card-cat">${p.category === "birth" ? "מארז לידה" : p.category === "gifts" ? "מארזי מתנה" : p.category === "extras" ? "מוצרים משלימים" : "תיק סרוג"}</span>
+          <span class="card-cat">${p.category === "workshops" ? "סדנאות סריגה" : p.category === "birth" ? "מארז לידה" : p.category === "gifts" ? "מארזי מתנה" : p.category === "extras" ? "מוצרים משלימים" : "תיק סרוג"}</span>
           <span class="card-name">${p.name}</span>
           <span class="card-more">לפרטי הפריט ←</span>
         </span>
       </a>`
       )
       .join("");
+    if (cat === "workshops" || cat === "all") {
+      $("#grid").insertAdjacentHTML("beforeend", '<article class="card classes-coming-soon"><span class="card-media"><img src="img/classes-coming-soon.svg" alt="חוגי סריגה — בקרוב" loading="lazy"></span><div class="card-body"><span class="card-cat">חוגים</span><h3 class="card-name">חוגי סריגה</h3><p class="card-more">בקרוב</p></div></article>');
+      $("#gallery-status").textContent = cat === "workshops" ? "סדנת סריגה אחת וחוגים בקרוב" : "מוצגים " + items.length + " פריטים וחוגים בקרוב";
+    }
   }
 
   /* ---------- piece detail ---------- */
@@ -250,10 +254,10 @@
           }
         </div>
         <div class="piece-info">
-          <p class="piece-kicker">${p.category === "birth" ? "מארז לידה בעבודת יד" : p.category === "gifts" ? "מארז מתנה בעבודת יד" : p.category === "extras" ? "מוצר משלים בעבודת יד" : "תיק סרוג בעבודת יד"}</p>
+          <p class="piece-kicker">${p.category === "workshops" ? "סדנאות סריגה" : p.category === "birth" ? "מארז לידה בעבודת יד" : p.category === "gifts" ? "מארז מתנה בעבודת יד" : p.category === "extras" ? "מוצר משלים בעבודת יד" : "תיק סרוג בעבודת יד"}</p>
           <h1>${p.name}</h1>
           <p class="piece-price">${p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</p>
-          <p class="piece-made">כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים</p>
+          <p class="piece-made">${p.category === "workshops" ? "זמן לעצמך, ליווי אישי ויצירה בידיים" : "כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים"}</p>
           <a class="btn btn-primary btn-block" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה / שאילתא בוואטסאפ</a>
           <a class="btn btn-outline btn-block" href="tel:${B.phone}">${ICONS.phone} לשיחה: ${B.phoneDisplay}</a>
           <div class="piece-desc">

@@ -20,6 +20,7 @@ const TRIKOMIK = {
     { id: "birth", label: "מארזי לידה" },
     { id: "gifts", label: "מארזי מתנה" },
     { id: "extras", label: "מוצרים משלימים" },
+    { id: "workshops", label: "סדנאות סריגה וחוגים" },
   ],
 
   delivery:
@@ -57,6 +58,28 @@ const TRIKOMIK = {
 ],
 
   products: [
+    {
+  "slug": "beginner-crochet-workshop",
+  "name": "סדנת סריגה למתחילות ולמתחילים",
+  "shortName": "סדנת סריגה למתחילות ולמתחילים",
+  "category": "workshops",
+  "price": 350,
+  "images": [
+    "img/beginner-workshop-updated.png"
+  ],
+  "color": "#cbb6e8",
+  "description": [
+    "זה הרבה יותר מסריגה… זו הפסקה מהשגרה, זמן לעצמך, אווירה ביתית, ויצירה שממלאת את הלב. 💜",
+    "פרסום המועדים בקרוב"
+  ],
+  "details": [
+    "תיק, תחתית לסיר או סלסלה",
+    "ליווי אישי וסבלני",
+    "חוויה מרגיעה ויצירה בידיים"
+  ],
+  "specs": [],
+  "note": "לפרטים נוספים: מיכל, 052-969-8082."
+},
     {
       slug: "monkey",
       name: "Monkey – מארז לידה בעבודת יד",
