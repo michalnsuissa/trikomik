@@ -462,3 +462,25 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 
 .hero-slide img.hero-slide-outgoing { position: absolute; top: 0; left: 0; width: 100%; pointer-events: none; }
 
+
+.birth-extras { margin-top: 1.8rem; padding: 1.3rem; border: 1px solid #ded1eb; border-radius: 22px; background: #fffafc; }
+.birth-extras .piece-sub { margin: 0 0 .3rem; font-size: 1.45rem; }
+.extras-intro,.extras-caption { color: var(--ink-soft); font-size: .88rem; }
+.extra-card-option { display: flex; align-items: center; gap: .7rem; padding: 1rem 0; cursor: pointer; }
+.extra-card-option strong { margin-inline-start: auto; white-space: nowrap; color: var(--purple-deep); }
+.birth-extras input { accent-color: var(--purple); width: 19px; height: 19px; flex-shrink: 0; }
+.birth-extras input:focus-visible { outline: 3px solid var(--purple); outline-offset: 4px; }
+.balloon-options { border: 0; padding: .8rem 0 0; border-top: 1px solid #e6dced; min-width: 0; }
+.balloon-options legend { font-weight: 700; color: var(--purple-deep); padding-inline-end: .6rem; }
+.balloon-options legend span { font-weight: 400; font-size: .9rem; }
+.no-balloon { display: flex; align-items: center; gap: .5rem; margin: .5rem 0 1rem; cursor: pointer; }
+.balloon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.balloon-choice { border: 2px solid #e6dced; border-radius: 15px; overflow: hidden; background: white; cursor: pointer; }
+.balloon-choice:has(input:checked) { border-color: var(--purple); background: #f2eaf9; }
+.balloon-choice img { width: 100%; height: 180px; object-fit: contain; background: white; }
+.balloon-choice span { display: flex; justify-content: center; align-items: center; gap: .5rem; padding: .7rem .3rem; }
+.extras-caption { margin: .7rem 0; }
+.extras-summary { padding: 1rem 0; border-top: 1px solid #e6dced; color: var(--purple-deep); }
+.extras-total { font-size: 1.3rem; white-space: nowrap; }
+.extras-summary small { display: block; color: var(--ink-soft); margin-top: .2rem; }
+@media(max-width:560px) { .birth-extras { padding: 1rem; } .balloon-choice img { height: 150px; } }

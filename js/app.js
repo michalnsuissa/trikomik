@@ -269,6 +269,7 @@
                  </dl>`
               : ""
           }
+          ${p.category === "birth" ? birthExtras(p) : ""}
           <div class="piece-social">
             <a href="${B.instagram}" target="_blank" rel="noopener">${ICONS.instagram}</a>
             <a href="${B.facebook}" target="_blank" rel="noopener">${ICONS.facebook}</a>
@@ -282,6 +283,23 @@
         </div>
       </section>
     `;
+
+    if (p.category === "birth") {
+      const extras = $(".birth-extras", app);
+      const updateExtras = () => {
+        const card = $("#birth-card", extras).checked;
+        const balloon = $("input[name=birth-balloon]:checked", extras).value;
+        const total = p.price + (card ? 50 : 0) + (balloon ? 18 : 0);
+        const choices = [];
+        if (card) choices.push("כרטיס ברכה בעבודת יד — 50 ש״ח");
+        if (balloon) choices.push("בלון הליום " + (balloon === "prince" ? "נסיך נולד" : "נסיכה נולדה") + " — 18 ש״ח");
+        $(".extras-total", extras).textContent = fmt(total);
+        const message = waMsg(p) + (choices.length ? "\nתוספות:\n" + choices.join("\n") : "") + "\nסה״כ: " + fmt(total) + " (לפני משלוח)";
+        $$(".piece-info a[href^='https://wa.me/']", app).forEach(link => link.href = waLink(message));
+      };
+      extras.addEventListener("change", updateExtras);
+      updateExtras();
+    }
 
     /* multi-image slider */
     const trackImgs = $$(".pg-track img");
@@ -322,6 +340,25 @@
         openLightbox($(".piece-gallery img").src)
       );
     }
+  }
+
+  function birthExtras(p) {
+    return `<section class="birth-extras" aria-labelledby="extras-heading">
+      <h2 id="extras-heading" class="piece-sub">תוספות למארז</h2>
+      <p class="extras-intro">עוד קצת שמחה למתנה שלך</p>
+      <label class="extra-card-option"><input type="checkbox" id="birth-card"><span>כרטיס ברכה בעבודת יד</span><strong>50 ₪</strong></label>
+      <fieldset class="balloon-options">
+        <legend>בלון הליום <span>18 ₪ לבלון</span></legend>
+        <label class="no-balloon"><input type="radio" name="birth-balloon" value="" checked> ללא בלון</label>
+        <div class="balloon-grid">
+          <label class="balloon-choice"><img src="img/balloon-prince.jpg" alt="דוגמת בלון הליום נסיך נולד" loading="lazy"><span><input type="radio" name="birth-balloon" value="prince"> נסיך נולד</span></label>
+          <label class="balloon-choice"><img src="img/balloon-princess.jpg" alt="בלון הליום נסיכה נולדה" loading="lazy"><span><input type="radio" name="birth-balloon" value="princess"> נסיכה נולדה</span></label>
+        </div>
+        <p class="extras-caption">התוספת כוללת בלון הליום אחד. התמונות להמחשת הדגמים.</p>
+      </fieldset>
+      <p class="extras-summary">סה״כ כולל התוספות: <strong class="extras-total">${fmt(p.price)}</strong><small>לפני משלוח</small></p>
+      <a class="btn btn-primary btn-block" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנת המארז עם הבחירות שלי</a>
+    </section>`;
   }
 
   /* ---------- lightbox ---------- */
