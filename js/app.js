@@ -189,7 +189,7 @@
       (p) => cat === "all" || p.category === cat
     ).sort((a, b) => ({ bags: 0, birth: 1, gifts: 2, extras: 3 }[a.category] ?? 3) - ({ bags: 0, birth: 1, gifts: 2, extras: 3 }[b.category] ?? 3));
     $("#grid-empty").hidden = items.length > 0;
-    $("#grid-empty").textContent = cat === "extras" ? "תמונה בקרוב" : "אין פריטים בקטגוריה הזו כרגע";
+    $("#grid-empty").innerHTML = cat === "extras" ? '<img src="img/complementary-coming-soon.svg" alt="בקרוב — מוצרים משלימים בעבודת יד" width="800" height="600" style="width:min(100%,480px);height:auto;margin-inline:auto">' : "אין פריטים בקטגוריה הזו כרגע";
     $("#gallery-status").textContent = `מוצגים ${items.length} פריטים`;
     $("#grid").innerHTML = items
       .map(
