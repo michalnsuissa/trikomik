@@ -187,7 +187,7 @@
   function renderGrid(cat) {
     const items = TRIKOMIK.products.filter(
       (p) => cat === "all" || p.category === cat
-    ).sort((a, b) => ({ bags: 0, birth: 1, extras: 2 }[a.category] ?? 3) - ({ bags: 0, birth: 1, extras: 2 }[b.category] ?? 3));
+    ).sort((a, b) => ({ bags: 0, birth: 1, gifts: 2, extras: 3 }[a.category] ?? 3) - ({ bags: 0, birth: 1, gifts: 2, extras: 3 }[b.category] ?? 3));
     $("#grid-empty").hidden = items.length > 0;
     $("#gallery-status").textContent = `מוצגים ${items.length} פריטים`;
     $("#grid").innerHTML = items
@@ -204,7 +204,7 @@
           }
         </span>
         <span class="card-body">
-          <span class="card-cat">${p.category === "birth" ? "מארז לידה" : p.category === "extras" ? "מוצרים משלימים ומארזים" : "תיק סרוג"}</span>
+          <span class="card-cat">${p.category === "birth" ? "מארז לידה" : p.category === "gifts" ? "מארזי מתנה" : p.category === "extras" ? "מוצרים משלימים" : "תיק סרוג"}</span>
           <span class="card-name">${p.name}</span>
           <span class="card-more">לפרטי הפריט ←</span>
         </span>
@@ -249,7 +249,7 @@
           }
         </div>
         <div class="piece-info">
-          <p class="piece-kicker">${p.category === "birth" ? "מארז לידה בעבודת יד" : p.category === "extras" ? "מארז בעבודת יד" : "תיק סרוג בעבודת יד"}</p>
+          <p class="piece-kicker">${p.category === "birth" ? "מארז לידה בעבודת יד" : p.category === "gifts" ? "מארז מתנה בעבודת יד" : p.category === "extras" ? "מוצר משלים בעבודת יד" : "תיק סרוג בעבודת יד"}</p>
           <h1>${p.name}</h1>
           <p class="piece-price">${p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</p>
           <p class="piece-made">כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים</p>
