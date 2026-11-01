@@ -326,8 +326,6 @@ const TRIKOMIK = {
       price: 450,
       images: [
         "img/903c47b5-abf9c085-95dc-4a9e-a8b8-133782c78025-1600.webp",
-        "img/903c47b5-185d0239-9d0c-4277-be7c-ccc82fd06bcb-1600.webp",
-        "img/903c47b5-9902d7b5-3d02-48eb-bf09-9be2253f677e-1600.webp",
       ],
       color: "#e3b7c3",
       description: [
