@@ -488,3 +488,5 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .piece-main > img[src='img/monkey-original.jpeg'], .card-media img[src='img/monkey-original.jpeg'] { object-fit: contain; }
 
 .card-media img[src="img/beginner-workshop-updated.png"], .piece-main > img[src="img/beginner-workshop-updated.png"] { object-fit: contain; background: #fffdf9; }
+
+.piece-main > img[src='img/good-eye-original.jpeg'], .card-media img[src='img/good-eye-original.jpeg'] { object-fit: contain; }
