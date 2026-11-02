@@ -494,3 +494,7 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 
 .piece-main > img[src='img/good-eye-original.jpeg'], .card-media img[src='img/good-eye-original.jpeg'] { object-fit: contain; }
 .piece-main > img[src='img/baby-bless-original.jpeg'], .card-media img[src='img/baby-bless-original.jpeg'], .piece-main > img[src='img/baby-treasure-small-original.jpeg'], .card-media img[src='img/baby-treasure-small-original.jpeg'] { object-fit: contain; background: white; }
+
+/* Clearer product cards */
+.card-cat { display: none; }
+.card-more { font-size: 1rem; font-weight: 750; color: #63358f; opacity: 1; }
