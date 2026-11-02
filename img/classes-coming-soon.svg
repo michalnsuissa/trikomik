@@ -4,8 +4,9 @@
   <rect x="26" y="26" width="748" height="548" rx="28" fill="#fffdf9" stroke="#d8c8e8" stroke-width="2"/>
   <circle cx="400" cy="215" r="72" fill="#eee4f5"/>
   <g fill="none" stroke="#79549f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M359 203h82v57h-82zM350 185h100v20H350zM400 185v75"/>
-    <path d="M400 185c-36 0-45-37-21-37 15 0 21 37 21 37s6-37 21-37c24 0 15 37-21 37"/>
+    <path d="M369 171l80 104M445 158l-67 119" stroke="#b98a54" stroke-width="9"/>
+    <circle cx="395" cy="226" r="43" fill="#d9c5e8"/>
+    <path d="M365 197c33 5 55 25 65 47M356 215c28 2 55 19 65 43M369 260c4-32 22-56 50-68M389 267c-2-25 11-48 40-60M438 238c38 3 28 38 3 37"/>
   </g>
   <text x="400" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="82" font-weight="700" fill="#472b6b" direction="rtl">בקרוב</text>
   <text x="400" y="433" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#6b5d78" direction="rtl">חוגי סריגה</text>

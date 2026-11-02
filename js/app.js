@@ -204,7 +204,7 @@
       <a class="card ${p.category === "birth" ? "card-tall" : ""}" href="#/piece/${p.slug}" style="--i:${i}; animation-delay:${Math.min(i * 35, 280)}ms">
         <span class="card-media">
           <img src="${p.images[0]}" alt="${p.name}" loading="lazy" style="--tint:${p.color}">
-          <span class="card-price">${p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</span>
+          <span class="card-price">${p.comingSoon ? "בקרוב" : p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</span>
           ${
             p.images.length > 1
               ? `<span class="card-multi">${ICONS.stack} ${p.images.length} תמונות</span>`
@@ -219,10 +219,6 @@
       </a>`
       )
       .join("");
-    if (cat === "workshops" || cat === "all") {
-      $("#grid").insertAdjacentHTML("beforeend", '<article class="card classes-coming-soon"><span class="card-media"><img src="img/classes-coming-soon.svg" alt="חוגי סריגה — בקרוב" loading="lazy"></span><div class="card-body"><span class="card-cat">חוגים</span><h3 class="card-name">חוגי סריגה</h3><p class="card-more">בקרוב</p></div></article>');
-      $("#gallery-status").textContent = cat === "workshops" ? "סדנת סריגה אחת וחוגים בקרוב" : "מוצגים " + items.length + " פריטים וחוגים בקרוב";
-    }
   }
 
   /* ---------- piece detail ---------- */
@@ -263,7 +259,7 @@
         <div class="piece-info">
           <p class="piece-kicker">${p.category === "workshops" ? "סדנאות סריגה" : p.category === "birth" ? "מארז לידה בעבודת יד" : p.category === "gifts" ? "מארז מתנה בעבודת יד" : p.category === "extras" ? "מוצר משלים בעבודת יד" : "תיק סרוג בעבודת יד"}</p>
           <h1>${p.name}</h1>
-          <p class="piece-price">${p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</p>
+          <p class="piece-price">${p.comingSoon ? "בקרוב" : p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</p>
           <p class="piece-made">${p.category === "workshops" ? "זמן לעצמך, ליווי אישי ויצירה בידיים" : "כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים"}</p>
           <a class="btn btn-primary btn-block" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה / שאילתא בוואטסאפ</a>
           <a class="btn btn-outline btn-block" href="tel:${B.phone}">${ICONS.phone} לשיחה: ${B.phoneDisplay}</a>

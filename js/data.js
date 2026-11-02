@@ -59,6 +59,18 @@ const TRIKOMIK = {
 
   products: [
     {
+      slug: "weekly-crochet-classes",
+      name: "חוגי סריגה שבועיים",
+      shortName: "חוגי סריגה",
+      category: "workshops",
+      comingSoon: true,
+      images: ["img/classes-coming-soon.svg"],
+      color: "#b8a0ce",
+      description: ["בקרוב ייפתחו חוגי סריגה במתכונת שבועית. זמן קבוע לעצמך, ליצירה בחוטים, ללמידה ולהנאה מהדרך באווירה נעימה ואישית.", "הימים והשעות יפורסמו בהמשך. מוזמנים לפנות אליי ולהתעדכן לקראת פתיחת החוגים."],
+      details: ["מפגשי סריגה במתכונת שבועית", "החוגים ייפתחו בקרוב", "הימים והשעות יפורסמו בהמשך"],
+      specs: [],
+    },
+    {
       slug: "first-hug-girl",
       name: "חיבוק ראשון לבת — מארז לידה",
       shortName: "חיבוק ראשון לבת",
