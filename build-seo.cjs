@@ -8,13 +8,14 @@ vm.runInNewContext(fs.readFileSync(path.join(root,'js/data.js'),'utf8') + '\nthi
 const D = context.catalog, origin = 'https://trikomik.com';
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money = p => p.comingSoon ? 'בקרוב' : p.price + ' ₪';
-const categoryCopy = {
+const categoryFallback = {
  bags: 'תיקים סרוגים בעבודת יד, במגוון צבעים ועיצובים. גלו את המידות, החומרים והמחירים ובחרו תיק שמתאים לכם.',
  birth: 'מארזי לידה בעבודת יד עם סלסלאות סרוגות ופריטים לתינוק וליולדת. איסוף עצמי באשדוד ומשלוחים בהתאם לאזור החלוקה.',
  gifts: 'מארזי מתנה בעבודת יד לבית, לחגים ולאנשים שרוצים לשמח. פריטים סרוגים ושילובים אישיים מבית TrikoMik באשדוד.',
  extras: 'פריטים סרוגים בעבודת יד להשלמת המתנה ולעיצוב הבית. פרטים, מידות ומחירים לכל מוצר.',
  workshops: 'סדנאות סריגה למתחילות ולמתחילים וחוגי סריגה שבועיים באשדוד. פרסום המועדים בקרוב.'
 };
+const categoryCopy = Object.fromEntries(D.categories.filter(c=>c.id!=='all').map(c=>[c.id,c.description||categoryFallback[c.id]]));
 let shell = fs.readFileSync(path.join(root,'index.html'),'utf8');
 const card = p => `<a class="card ${p.category==='birth'?'card-tall':''}" href="/products/${p.slug}/"><span class="card-media"><img src="/${p.images[0]}" alt="${esc(p.name)}" loading="lazy"><span class="card-price">${money(p)}</span></span><span class="card-body"><span class="card-name">${esc(p.name)}</span><span class="card-more">לפרטים ←</span></span></a>`;
 const links = D.categories.filter(c=>c.id!=='all').map(c=>`<a class="chip" href="/categories/${c.id}/">${c.label}</a>`).join(' ');
