@@ -14,6 +14,11 @@
   };
 
   function parseHash() {
+    if (!location.hash.startsWith("#/")) {
+      const parts = location.pathname.split("/").filter(Boolean);
+      if (parts[0] === "products") return {route: "piece", param: parts[1]};
+      if (parts[0] === "categories") return {route: "category", param: parts[1]};
+    }
     const h = location.hash.replace(/^#\/?/, "");
     const [route, param] = h.split("/");
     return { route: routes[route] ? route : "", param };
@@ -32,7 +37,23 @@
     const { route, param } = parseHash();
     window.scrollTo(0, 0);
     if (route === "piece") piece(param);
-    else home();
+    else {
+      home();
+      if (route === "category") {
+        const category = TRIKOMIK.categories.find(c => c.id === param);
+        if (category) {
+          renderGrid(param);
+          document.querySelectorAll("[data-cat]").forEach(b => { b.setAttribute("aria-pressed", String(b.dataset.cat === param)); b.classList.toggle("active", b.dataset.cat === param); });
+          stopHeroCarousel();
+          document.querySelector(".hero")?.remove();
+          document.querySelector("#about")?.remove();
+          const heading = document.querySelector(".gallery-head h2");
+          const title = document.createElement("h1"); title.textContent = category.label; heading.replaceWith(title);
+          document.querySelector(".gallery-head p").textContent = category.description || "כל פריט נסרג ביד, אחד לאחד. לחיצה על פריט תפתח את כל הפרטים והמידות";
+          requestAnimationFrame(() => document.getElementById("gallery-anchor").scrollIntoView());
+        }
+      }
+    }
   }
   window.addEventListener("hashchange", navigate);
 
@@ -49,7 +70,8 @@
 
   /* ---------- home ---------- */
   function home() {
-    document.title = "TrikoMik — סרוג באהבה, נוצר במיוחד בשבילך";
+    const currentCategory = location.pathname.match(/^\/categories\/([^/]+)\//)?.[1];
+    document.title = currentCategory ? `${TRIKOMIK.categories.find(c => c.id === currentCategory)?.label || "החנות"} | TrikoMik` : "TrikoMik | תיקים סרוגים, מארזי לידה וסדנאות באשדוד";
     const app = $("#app");
     const slides = TRIKOMIK.products.flatMap(p => p.images.map(src => ({ src, name: p.name, slug: p.slug })));
     for (let i = slides.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [slides[i], slides[j]] = [slides[j], slides[i]]; }
