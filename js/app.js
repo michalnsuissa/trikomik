@@ -81,11 +81,11 @@
         <div class="container hero-inner">
           <div class="hero-copy">
             <img class="hero-brand-logo" src="img/trikomik-logo-transparent.png" alt="TRIKOMIK">
-            <h1 class="hero-title">סרוג באהבה<br><span class="hero-title-accent">ומדויק בשבילך</span></h1>
-            <p class="hero-text">מארזי לידה • סלסלות מעוצבות • תיקים בהתאמה אישית • סדנאות סריגה<br>הכל 100% עבודת יד</p>
+            <h1 class="hero-title">סרוג באהבה<br><span class="hero-title-accent">עם מחשבה עלייך</span></h1>
+            <p class="hero-text">תיקי נשים, מארזי לידה ופריטים לעיצוב הבית.<br>סריגה בעבודת יד, עם אפשרות להתאמה אישית ותשומת לב לכל פרט.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#gallery-anchor">צפייה בחנות <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
-              <a class="btn btn-ghost" href="${waLink("שלום מיכל! הגעתי לאתר של TrikoMik 💜")}">שיחה בוואטסאפ</a>
+              <a class="btn btn-primary" href="#gallery-anchor">לקטלוג המוצרים <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
+              <a class="btn btn-ghost" href="${waLink("שלום מיכל! הגעתי לאתר של TrikoMik 💜")}">להזמנה והתאמה אישית בוואטסאפ</a>
             </div>
           </div>
           <div class="hero-art hero-carousel" role="region" aria-roledescription="קרוסלה" aria-label="מוצרים מהחנות">
@@ -104,14 +104,7 @@
         <div class="about-card">
           <div>
             <h2 class="about-heading"><span>ברוכים הבאים ל־</span><img class="about-heading-logo" src="${B.logo}" alt="TrikoMik"></h2>
-            <p>${TRIKOMIK.brand.description.replace(/^ברוכים הבאים ל-TrikoMik 💜 /, "")}</p>
-            <div class="about-personal">
-              <h3>למה לבחור בי?</h3>
-              <p>מאחורי כל פריט של TrikoMik עומדת אני, מיכל, עם אהבה לסריגה, לצבעים ולפרטים הקטנים שהופכים מתנה לאישית ומרגשת.</p>
-              <p>אני בוחרת את שילובי הצבעים, סורגת ביד ומקדישה תשומת לב לכל גימור. חשוב לי שהפריט שתבחרו יהיה יפה, שימושי וכזה שכיף להעניק וגם לקבל.</p>
-              <p>מההתלבטות הראשונה ועד לבחירה הסופית, אני כאן כדי להקשיב ולעזור למצוא את מה שמתאים לכם. אפשר להתייעץ איתי על צבעים והתאמות אישיות, בהתאם למוצר ולחומרים הקיימים במלאי.</p>
-              <p>כי בשבילי, כל הזמנה היא הזדמנות לשמח מישהו דרך משהו שיצרתי בידיים ועם הלב. 💜</p>
-            </div>
+            <p>נעים להכיר, אני מיכל. מאחורי כל פריט של TrikoMik עומדת אהבה גדולה למלאכת הסריגה, לצבעים ולגימורים שהופכים כל מוצר לאישי ומרגש. כל תיק, סלסלה ומארז לידה נסרגים בעבודת יד קפדנית, כדי ליצור פריט יפה, שימושי ובעל ערך אישי. אני כאן ללוות אותך משלב בחירת הצבעים ועד לתוצאה הסופית, עם אפשרות להתאמה אישית בהתאם לדגם ולחומרים הקיימים במלאי. 💜</p>
             <div class="about-social">
               <a href="${B.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.instagram}<span>Instagram</span></a>
               <a href="${B.facebook}" target="_blank" rel="noopener" aria-label="Facebook">${ICONS.facebook}<span>Facebook</span></a>
@@ -146,8 +139,8 @@
             <h3><span class="icon">${ICONS.truck}</span> משלוחים</h3>
             <p>${TRIKOMIK.delivery}</p>
           </div>
-          <details class="policy-block policy-disclosure">
-            <summary>מדיניות ביטולים והחזרות</summary>
+          <div class="policy-block"><h3>קנייה בלב שקט</h3><p>${TRIKOMIK.returnPolicyIntro}</p><details class="policy-disclosure">
+            <summary>לפירוט תנאי הביטולים וההחזרות</summary>
             <p>${TRIKOMIK.returnPolicyMain}</p>
             <a class="btn btn-outline" href="${waLink("שלום מיכל, אבקש לבטל הזמנה. השם שלי: ____; פרטי ההזמנה: ____")}" target="_blank" rel="noopener">בקשת ביטול הזמנה</a>
             <ul class="policy-list">
@@ -155,15 +148,15 @@
                 .map((r) => `<li><strong>${r.title}:</strong> ${r.text}</li>`)
                 .join("")}
             </ul>
-          </details>
+          </details></div>
         </div>
       </section>
 
       <section class="contact container" id="contact">
-        <h2>מתחשק לכם משהו שונה? 💜</h2>
-        <p>אשמח לשאלות, התאמות אישיות, צבעים ומידות בהתאמה — פשוט שלחו הודעה</p>
+        <h2>לא מצאת את הצבע המדויק? 💜</h2>
+        <p>דברי איתי ונבדוק יחד איך ליצור פריט שמתאים לך, בהתאם לדגם ולצבעים הקיימים במלאי.</p>
         <div class="contact-actions">
-          <a class="btn btn-primary" href="${waLink("שלום מיכל! הגעתי לאתר של TrikoMik 💜")}" target="_blank" rel="noopener">${ICONS.whatsapp} הודעה בוואטסאפ</a>
+          <a class="btn btn-primary" href="${waLink("שלום מיכל! הגעתי לאתר של TrikoMik 💜")}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה והתאמה אישית בוואטסאפ</a>
           <a class="btn btn-outline" href="tel:${B.phone}">${ICONS.phone} ${B.phoneDisplay}</a>
         </div>
       </section>
