@@ -507,3 +507,5 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 
 .hero-title { font-size: clamp(2.15rem, 4.7vw, 3.7rem); font-weight: 500; line-height: 1.25; color: #654486; }
 .hero-title-accent { color: #79559b; }
+
+.piece-main > img[src*='mint-basket-original.jpeg'], .card-media img[src*='mint-basket-original.jpeg'] { object-fit: contain; background: #faf7f2; }
