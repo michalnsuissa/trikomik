@@ -504,3 +504,6 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .about-personal { margin-top: 1.6rem; }
 .about-personal h3 { color: var(--purple-deep); font-family: var(--font-display); font-size: 1.4rem; margin-bottom: .7rem; }
 .about-personal p + p { margin-top: .8rem; }
+
+.hero-title { font-size: clamp(2.15rem, 4.7vw, 3.7rem); font-weight: 500; line-height: 1.25; color: #654486; }
+.hero-title-accent { color: #79559b; }

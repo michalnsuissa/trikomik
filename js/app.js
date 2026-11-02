@@ -81,8 +81,8 @@
         <div class="container hero-inner">
           <div class="hero-copy">
             <img class="hero-brand-logo" src="img/trikomik-logo-transparent.png" alt="TRIKOMIK">
-            <h1 class="hero-title">סרוג באהבה<br><span class="hero-title-accent">עם מחשבה עלייך</span></h1>
-            <p class="hero-text">תיקי נשים, מארזי לידה ופריטים לעיצוב הבית.<br>סריגה בעבודת יד, עם אפשרות להתאמה אישית ותשומת לב לכל פרט.</p>
+            <h1 class="hero-title">סרוג באהבה,<br><span class="hero-title-accent">נוצר במיוחד בשבילך</span></h1>
+            <p class="hero-text">מארזי לידה • סלסלות מעוצבות • תיקים בהתאמה אישית • סדנאות סריגה<br>הכל 100% עבודת יד</p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="#gallery-anchor">לקטלוג המוצרים <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></a>
               <a class="btn btn-ghost" href="${waLink("שלום מיכל! הגעתי לאתר של TrikoMik 💜")}">להזמנה והתאמה אישית בוואטסאפ</a>
