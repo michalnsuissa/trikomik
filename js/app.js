@@ -104,7 +104,7 @@
         <div class="about-card">
           <div>
             <h2 class="about-heading"><span>ברוכים הבאים ל־</span><img class="about-heading-logo" src="${B.logo}" alt="TrikoMik"></h2>
-            <p>נעים להכיר, אני מיכל. מאחורי כל פריט של TrikoMik עומדת אהבה גדולה למלאכת הסריגה, לצבעים ולגימורים שהופכים כל מוצר לאישי ומרגש. כל תיק, סלסלה ומארז לידה נסרגים בעבודת יד קפדנית, כדי ליצור פריט יפה, שימושי ובעל ערך אישי. אני כאן ללוות אותך מבחירת הצבעים ועד לפריט אישי שנוצר במיוחד עבורך. 💜</p>
+            <p>נעים להכיר, אני מיכל. מאחורי כל פריט של TrikoMik עומדת אהבה גדולה לעולם הסריגה במסרגה אחת, לצבעים ולגימורים שהופכים כל מוצר לאישי ומרגש. כל סלסלה ומארז לידה נסרגים בעבודת יד קפדנית, כדי ליצור פריט יפה, שימושי ובעל ערך אישי. כל תיק נסרג עם רעיון עיצובי וייחודי במיוחד בשבילך. אני כאן ללוות אותך מבחירת הצבעים ועד לפריט אישי שנוצר במיוחד עבורך.</p>
             <div class="about-social">
               <a href="${B.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.instagram}<span>Instagram</span></a>
               <a href="${B.facebook}" target="_blank" rel="noopener" aria-label="Facebook">${ICONS.facebook}<span>Facebook</span></a>
