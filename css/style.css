@@ -498,3 +498,5 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 /* Clearer product cards */
 .card-cat { display: none; }
 .card-more { font-size: 1rem; font-weight: 750; color: #63358f; opacity: 1; }
+
+.contact-brand-logo { display: block; width: min(210px, 65%); height: auto; margin: 0 auto 1rem; background: #fffdf9; padding: .6rem 1rem; border-radius: 18px; }

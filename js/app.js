@@ -153,8 +153,9 @@
       </section>
 
       <section class="contact container" id="contact">
+        <img class="contact-brand-logo" src="${B.logo}" alt="TrikoMik">
         <h2>לא מצאת את הצבע המדויק? 💜</h2>
-        <p>דברי איתי ונבדוק יחד איך ליצור פריט שמתאים לך, בהתאם לדגם ולצבעים הקיימים במלאי.</p>
+        <p>דברי איתי ונסרוג יחד פריט שמתאים לך.</p>
         <div class="contact-actions">
           <a class="btn btn-primary" href="${waLink("שלום מיכל! הגעתי לאתר של TrikoMik 💜")}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה והתאמה אישית בוואטסאפ</a>
           <a class="btn btn-outline" href="tel:${B.phone}">${ICONS.phone} ${B.phoneDisplay}</a>
