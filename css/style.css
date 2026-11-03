@@ -520,3 +520,5 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .greeting-text-field p, #greeting-count { font-size: .9rem; margin-top: .4rem; }
 
 .piece-main > img[src*='pot-mats-corrected.png'], .card-media img[src*='pot-mats-corrected.png'] { object-fit: contain; background: white; }
+
+.piece-main > img[src*='rose-heart-clutch-original.jpeg'], .card-media img[src*='rose-heart-clutch-original.jpeg'] { object-fit: contain; background: white; }
