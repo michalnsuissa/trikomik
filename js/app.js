@@ -338,13 +338,13 @@
       });
       const updateExtras = () => {
         const card = $("#birth-card", extras).checked;
-        greeting.disabled = !card;
-        $(".greeting-text-field", extras).hidden = !card;
+        greeting.disabled = false;
+        $(".greeting-text-field", extras).hidden = false;
         const balloon = $("input[name=birth-balloon]:checked", extras).value;
         const total = p.price + (card ? 45 : 0) + (balloon ? 18 : 0);
         const choices = [];
         if (card) choices.push("כרטיס ברכה בעבודת יד של האמנית סיגל כהן — 45 ש״ח");
-        if (card && greeting.value.trim()) choices.push("מלל הברכה:\n" + cleanGreeting(greeting.value).trim());
+        if (greeting.value.trim()) choices.push("מלל הברכה:\n" + cleanGreeting(greeting.value).trim());
         if (balloon) choices.push("בלון הליום " + (balloon === "prince" ? "נסיך נולד" : "נסיכה נולדה") + " — 18 ש״ח");
         $(".extras-total", extras).textContent = fmt(total);
         const message = waMsg(p) + (choices.length ? "\nתוספות:\n" + choices.join("\n") : "") + "\nסה״כ: " + fmt(total) + " (לפני משלוח)";
@@ -408,7 +408,7 @@
       <h2 id="extras-heading" class="piece-sub">תוספות למארז</h2>
       <p class="extras-intro">עוד קצת שמחה למתנה שלך</p>
       <label class="extra-card-option"><input type="checkbox" id="birth-card"><span>כרטיס ברכה בעבודת יד של האמנית סיגל כהן</span><strong>45 ₪</strong></label><div class="greeting-card-gallery" aria-label="תמונות כרטיסי הברכה של סיגל כהן"><img src="/img/sigal-card-girl.jpeg" alt="כרטיס ברכה של סיגל כהן — פיל ורוד"><img src="/img/sigal-card-boy-welcome.jpeg" alt="כרטיס ברכה של סיגל כהן — Welcome Baby Boy"><img src="/img/sigal-card-boy-bear.jpeg" alt="כרטיס ברכה של סיגל כהן — Baby Boy עם דובי"></div>
-      <div class="greeting-text-field" hidden><label for="birth-greeting">מלל הברכה לכרטיס (אופציונלי)</label><textarea id="birth-greeting" rows="4" dir="auto" disabled aria-describedby="greeting-help greeting-count greeting-feedback" placeholder="לדוגמה: מזל טוב להולדת הבת! מאחלים לכם אושר, בריאות והמון רגעים יפים יחד."></textarea><p id="greeting-help">עד 250 תווים, ללא סמיילים או אימוג׳י. הטקסט המוצג בשדה הוא לדוגמה בלבד.</p><span id="greeting-count">0/250 תווים</span><p id="greeting-feedback" role="status"></p></div><fieldset class="balloon-options">
+      <div class="greeting-text-field"><label for="birth-greeting">ברכה למקבל/ת המתנה (אופציונלי)</label><textarea id="birth-greeting" rows="4" dir="auto" aria-describedby="greeting-help greeting-count greeting-feedback" placeholder="לדוגמה: מזל טוב להולדת הבת! מאחלים לכם אושר, בריאות והמון רגעים יפים יחד."></textarea><p id="greeting-help">אפשר להוסיף ברכה גם ללא רכישת כרטיס מעוצב. עד 250 תווים, ללא סמיילים או אימוג׳י. הטקסט המוצג בשדה הוא לדוגמה בלבד.</p><span id="greeting-count">0/250 תווים</span><p id="greeting-feedback" role="status"></p></div><fieldset class="balloon-options">
         <legend>בלון הליום <span>18 ₪ לבלון</span></legend>
         <label class="no-balloon"><input type="radio" name="birth-balloon" value="" checked> ללא בלון</label>
         <div class="balloon-grid">
