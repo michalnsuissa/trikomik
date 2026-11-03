@@ -513,3 +513,8 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .greeting-card-gallery { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .75rem; margin-bottom: 1.25rem; }
 .greeting-card-gallery img { display: block; width: 100%; height: 180px; object-fit: contain; background: white; border-radius: 10px; }
 @media(max-width:560px) { .greeting-card-gallery { grid-template-columns: 1fr; } .greeting-card-gallery img { height: 240px; } }
+
+.greeting-text-field { margin: 1rem 0 1.5rem; }
+.greeting-text-field label { display: block; font-weight: 600; margin-bottom: .5rem; }
+.greeting-text-field textarea { width: 100%; box-sizing: border-box; padding: .8rem; font: inherit; border: 1px solid #9374ad; border-radius: 10px; background: white; color: var(--ink); resize: vertical; }
+.greeting-text-field p, #greeting-count { font-size: .9rem; margin-top: .4rem; }
