@@ -329,9 +329,9 @@
       const updateExtras = () => {
         const card = $("#birth-card", extras).checked;
         const balloon = $("input[name=birth-balloon]:checked", extras).value;
-        const total = p.price + (card ? 50 : 0) + (balloon ? 18 : 0);
+        const total = p.price + (card ? 45 : 0) + (balloon ? 18 : 0);
         const choices = [];
-        if (card) choices.push("כרטיס ברכה בעבודת יד — 50 ש״ח");
+        if (card) choices.push("כרטיס ברכה בעבודת יד של האמנית סיגל כהן — 45 ש״ח");
         if (balloon) choices.push("בלון הליום " + (balloon === "prince" ? "נסיך נולד" : "נסיכה נולדה") + " — 18 ש״ח");
         $(".extras-total", extras).textContent = fmt(total);
         const message = waMsg(p) + (choices.length ? "\nתוספות:\n" + choices.join("\n") : "") + "\nסה״כ: " + fmt(total) + " (לפני משלוח)";
@@ -394,7 +394,7 @@
     return `<section class="birth-extras" aria-labelledby="extras-heading">
       <h2 id="extras-heading" class="piece-sub">תוספות למארז</h2>
       <p class="extras-intro">עוד קצת שמחה למתנה שלך</p>
-      <label class="extra-card-option"><input type="checkbox" id="birth-card"><span>כרטיס ברכה בעבודת יד</span><strong>50 ₪</strong></label>
+      <label class="extra-card-option"><input type="checkbox" id="birth-card"><span>כרטיס ברכה בעבודת יד של האמנית סיגל כהן</span><strong>45 ₪</strong></label><div class="greeting-card-gallery" aria-label="תמונות כרטיסי הברכה של סיגל כהן"><img src="/img/sigal-card-girl.jpeg" alt="כרטיס ברכה של סיגל כהן — פיל ורוד"><img src="/img/sigal-card-boy-welcome.jpeg" alt="כרטיס ברכה של סיגל כהן — Welcome Baby Boy"><img src="/img/sigal-card-boy-bear.jpeg" alt="כרטיס ברכה של סיגל כהן — Baby Boy עם דובי"></div>
       <fieldset class="balloon-options">
         <legend>בלון הליום <span>18 ₪ לבלון</span></legend>
         <label class="no-balloon"><input type="radio" name="birth-balloon" value="" checked> ללא בלון</label>
