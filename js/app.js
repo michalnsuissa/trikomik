@@ -235,7 +235,7 @@
           }
         </span>
         <span class="card-body">
-          <span class="card-cat">${p.category === "workshops" ? "סדנאות סריגה" : p.category === "birth" ? "מארז לידה" : p.category === "gifts" ? "מארזי מתנה" : p.category === "extras" ? "מוצרים משלימים" : "תיק סרוג"}</span>
+          <span class="card-cat">${p.category === "workshops" ? "סדנאות סריגה" : p.category === "birth" ? "מארז לידה" : p.category === "gifts" ? "מארזי מתנה" : p.category === "extras" ? "סלסלאות נוי ומוצרים משלימים" : "תיק סרוג"}</span>
           <span class="card-name">${p.name}</span>
           <span class="card-more">לפרטים ←</span>
         </span>

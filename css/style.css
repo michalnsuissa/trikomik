@@ -518,3 +518,5 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .greeting-text-field label { display: block; font-weight: 600; margin-bottom: .5rem; }
 .greeting-text-field textarea { width: 100%; box-sizing: border-box; padding: .8rem; font: inherit; border: 1px solid #9374ad; border-radius: 10px; background: white; color: var(--ink); resize: vertical; }
 .greeting-text-field p, #greeting-count { font-size: .9rem; margin-top: .4rem; }
+
+.piece-main > img[src*='pot-mats-corrected.png'], .card-media img[src*='pot-mats-corrected.png'] { object-fit: contain; background: white; }
