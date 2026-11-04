@@ -530,3 +530,5 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .piece-main > img[src*='luna-pouch-original.jpeg'], .card-media img[src*='luna-pouch-original.jpeg'] {object-fit:contain;background:white;}
 
 .piece-main > img[src*='rosie-basket-original.jpeg'], .card-media img[src*='rosie-basket-original.jpeg'] {object-fit:contain;background:white;}
+
+.piece-main > img[src*='jade-basket-original.jpeg'], .card-media img[src*='jade-basket-original.jpeg'] {object-fit:contain;background:white;}
