@@ -123,6 +123,7 @@
       </section>
 
       <section class="gallery container" id="gallery-anchor">
+        ${location.pathname.startsWith("/categories/") ? "" : shopTiles()}
         <div class="gallery-head">
           <h2>החנות</h2>
           <p>כל פריט נסרג ביד, אחד לאחד. לחיצה על פריט תפתח את כל הפרטים והמידות</p>
@@ -215,8 +216,10 @@
   }
 
   function renderGrid(cat) {
+    document.querySelector(".shop-subnav")?.remove();
+    document.querySelector(".gallery-head")?.insertAdjacentHTML("beforeend",shopSubnav(cat));
     const items = TRIKOMIK.products.filter(
-      (p) => cat === "all" || p.category === cat
+      (p) => (cat === "all" || p.category === cat) && shopMatches(p, new URLSearchParams(location.search).get("sub"))
     ).sort((a, b) => ({ bags: 0, birth: 1, gifts: 2, extras: 3, workshops: 4 }[a.category] ?? 3) - ({ bags: 0, birth: 1, gifts: 2, extras: 3, workshops: 4 }[b.category] ?? 3));
     $("#grid-empty").hidden = items.length > 0;
     $("#grid-empty").innerHTML = cat === "extras" ? '<img src="img/complementary-coming-soon.svg" alt="בקרוב — מוצרים משלימים בעבודת יד" width="800" height="600" style="width:min(100%,480px);height:auto;margin-inline:auto">' : "אין פריטים בקטגוריה הזו כרגע";
