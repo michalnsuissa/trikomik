@@ -58,6 +58,44 @@ const TRIKOMIK = {
 ],
 
   products: [
+{
+  "slug": "sol-bag",
+  "name": "תיק SOL",
+  "shortName": "SOL",
+  "category": "bags",
+  "price": 349,
+  "images": [
+    "img/sol-bag-original.jpeg"
+  ],
+  "color": "#f4df72",
+  "description": [
+    "תיק סרוג בעבודת יד מבד טריקו בגוון צהוב, בשילוב ידיות עץ בגוון חום כהה. הסריגה העשירה והידיות הטבעיות מעניקות לו מראה מלא נוכחות ואופי.",
+    "תיק שמוסיף נגיעה של צבע להופעה, ומתאים לבילוי, לבית קפה או לחופשה."
+  ],
+  "details": [
+    "סרוג בעבודת יד מבד טריקו",
+    "גוון צהוב",
+    "ידיות עץ בגוון חום כהה"
+  ],
+  "specs": [
+    {
+      "label": "רוחב",
+      "value": "31 ס״מ"
+    },
+    {
+      "label": "גובה",
+      "value": "22 ס״מ"
+    },
+    {
+      "label": "משקל",
+      "value": "576 גרם"
+    },
+    {
+      "label": "ארץ ייצור",
+      "value": "ישראל"
+    }
+  ]
+},
     {
       slug: "rose-heart-clutch",
       name: "Rose Heart — קלאץ׳ ערב",
@@ -721,4 +759,5 @@ const TRIKOMIK = {
 
 /* fix real slugs where I renamed */
 TRIKOMIK.products.forEach((p) => { if (p.slugReal) p.slug = p.slugReal; delete p.slugReal; });
+
 
