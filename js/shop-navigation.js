@@ -1,8 +1,8 @@
 const SHOP_NAV = [
-{id:'birth',label:'מארזי לידה',image:'bunny',children:[['girls','מארזים לבת'],['boys','מארזים לבן']]},
-{id:'bags',label:'תיקים וארנקים',image:'rose-heart-clutch',children:[['bags','תיקים'],['clutches','ארנקי קלאץ׳']]},
+{id:'birth',label:'מארזי לידה',image:'first-hug-girl',children:[['girls','מארזים לבת'],['boys','מארזים לבן']]},
+{id:'bags',label:'תיקים וארנקים',image:'summer-bag',children:[['bags','תיקים'],['clutches','ארנקי קלאץ׳']]},
 {id:'gifts',label:'מארזי מתנה',image:'candle-duo',children:[]},
-{id:'extras',label:'סלסלאות נוי ומוצרים משלימים',image:'mint-basket',children:[['baskets','סלסלאות נוי'],['mats','משטחי סירים ותחתיות'],['decor','קישוטים לתלייה']]},
+{id:'extras',label:'סלסלאות נוי ומוצרים משלימים',image:'rosie-basket',children:[['baskets','סלסלאות נוי'],['mats','משטחי סירים ותחתיות'],['decor','קישוטים לתלייה']]},
 {id:'workshops',label:'סדנאות וחוגים',image:'beginner-crochet-workshop',children:[['workshops','סדנאות סריגה'],['classes','חוגי סריגה']]}
 ];
 function shopHref(id,sub){return '/categories/'+id+'/'+(sub?'?sub='+sub:'');}
