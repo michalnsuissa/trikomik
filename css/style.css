@@ -488,12 +488,12 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .extras-summary small { display: block; color: var(--ink-soft); margin-top: .2rem; }
 @media(max-width:560px) { .birth-extras { padding: 1rem; } .balloon-choice img { height: 150px; } }
 
-.piece-main > img[src='img/monkey-original.jpeg'], .card-media img[src='img/monkey-original.jpeg'] { object-fit: contain; }
+.piece-main > img[src='img/monkey-label-fixed.png'], .card-media img[src='img/monkey-label-fixed.png'] { object-fit: contain; }
 
 .card-media img[src="img/beginner-workshop-updated.png"], .piece-main > img[src="img/beginner-workshop-updated.png"] { object-fit: contain; background: #fffdf9; }
 
 .piece-main > img[src='img/good-eye-original.jpeg'], .card-media img[src='img/good-eye-original.jpeg'] { object-fit: contain; }
-.piece-main > img[src='img/baby-bless-original.jpeg'], .card-media img[src='img/baby-bless-original.jpeg'], .piece-main > img[src='img/baby-treasure-small-original.jpeg'], .card-media img[src='img/baby-treasure-small-original.jpeg'] { object-fit: contain; background: white; }
+.piece-main > img[src='img/baby-bless-label-fixed.png'], .card-media img[src='img/baby-bless-label-fixed.png'], .piece-main > img[src='img/baby-treasure-small-original.jpeg'], .card-media img[src='img/baby-treasure-small-original.jpeg'] { object-fit: contain; background: white; }
 
 /* Clearer product cards */
 .card-cat { display: none; }
@@ -521,30 +521,30 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 
 .piece-main > img[src*='pot-mats-corrected.png'], .card-media img[src*='pot-mats-corrected.png'] { object-fit: contain; background: white; }
 
-.piece-main > img[src*='rose-heart-clutch-original.jpeg'], .card-media img[src*='rose-heart-clutch-original.jpeg'] { object-fit: contain; background: white; }
+.piece-main > img[src*='rose-heart-clutch-label-fixed.png'], .card-media img[src*='rose-heart-clutch-label-fixed.png'] { object-fit: contain; background: white; }
 
-.piece-main > img[src*='sage-clutch-original.jpeg'], .card-media img[src*='sage-clutch-original.jpeg'] { object-fit: contain; background: white; }
+.piece-main > img[src*='sage-clutch-label-fixed.png'], .card-media img[src*='sage-clutch-label-fixed.png'] { object-fit: contain; background: white; }
 
 .piece-main > img[src*='lime-heart-original.jpeg'], .card-media img[src*='lime-heart-original.jpeg'] {object-fit:contain;background:white;}
 
-.piece-main > img[src*='luna-pouch-original.jpeg'], .card-media img[src*='luna-pouch-original.jpeg'] {object-fit:contain;background:white;}
+.piece-main > img[src*='luna-pouch-label-fixed.png'], .card-media img[src*='luna-pouch-label-fixed.png'] {object-fit:contain;background:white;}
 
-.piece-main > img[src*='rosie-basket-original.jpeg'], .card-media img[src*='rosie-basket-original.jpeg'] {object-fit:contain;background:white;}
+.piece-main > img[src*='rosie-basket-label-fixed.png'], .card-media img[src*='rosie-basket-label-fixed.png'] {object-fit:contain;background:white;}
 
-.piece-main > img[src*='jade-basket-original.jpeg'], .card-media img[src*='jade-basket-original.jpeg'] {object-fit:contain;background:white;}
+.piece-main > img[src*='jade-basket-label-fixed.png'], .card-media img[src*='jade-basket-label-fixed.png'] {object-fit:contain;background:white;}
 
-.piece-main > img[src*='willow-basket-original.jpeg'], .card-media img[src*='willow-basket-original.jpeg'] {object-fit:contain;background:white;}
+.piece-main > img[src*='willow-basket-label-fixed.png'], .card-media img[src*='willow-basket-label-fixed.png'] {object-fit:contain;background:white;}
 
-.piece-main > img[src*='nola-basket-original.jpeg'], .card-media img[src*='nola-basket-original.jpeg'] {object-fit:contain;background:white;}
+.piece-main > img[src*='nola-basket-label-fixed.png'], .card-media img[src*='nola-basket-label-fixed.png'] {object-fit:contain;background:white;}
 
-.piece-main > img[src*='mila-basket-original.jpeg'], .card-media img[src*='mila-basket-original.jpeg'] {object-fit:contain;background:white;}
+.piece-main > img[src*='mila-basket-label-fixed.png'], .card-media img[src*='mila-basket-label-fixed.png'] {object-fit:contain;background:white;}
 
 .reviews-section{margin:4rem auto;padding:2.5rem 1.5rem;text-align:center;border:1px solid #e5d9eb;border-radius:28px;background:#fcf8f3}.reviews-eyebrow{color:#71518f;letter-spacing:.07em}.reviews-section h2{margin:.5rem 0 1rem}.reviews-section p{max-width:660px;margin:.8rem auto;line-height:1.8}.reviews-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;margin-top:1.5rem}
 .review-form{max-width:620px;margin:2rem auto;padding:1.5rem;background:white;border-radius:20px;text-align:start;border:1px solid #e5d9eb}.review-form label{display:block;margin:1rem 0;font-weight:600}.review-form input:not([type=checkbox]),.review-form textarea{display:block;width:100%;box-sizing:border-box;border:1px solid #9d88ad;border-radius:9px;padding:.8rem;margin-top:.4rem;font:inherit;background:#fff;color:#30203e}.review-form small{display:block;font-weight:400}.review-form .review-consent{display:flex;gap:.6rem;align-items:flex-start;font-weight:400}.review-consent input{width:22px;height:22px;flex-shrink:0}.review-form p{font-size:.9rem}.review-form button:disabled{opacity:.6}
 .approved-reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:2rem 0}.approved-reviews article{padding:1.4rem;border:1px solid #e5d9eb;border-radius:18px;background:white}.approved-reviews p{white-space:pre-wrap}.approved-reviews img{max-width:100%;max-height:260px;object-fit:contain}
 
-.piece-main > img[src*='aria-basket-original.jpeg'], .card-media img[src*='aria-basket-original.jpeg'] {object-fit:contain;background:white;}
+.piece-main > img[src*='aria-basket-label-fixed.png'], .card-media img[src*='aria-basket-label-fixed.png'] {object-fit:contain;background:white;}
 
-.piece-main > img[src*='belle-basket-original.jpeg'], .card-media img[src*='belle-basket-original.jpeg'] {object-fit:contain;background:white;}
+.piece-main > img[src*='belle-basket-label-fixed.png'], .card-media img[src*='belle-basket-label-fixed.png'] {object-fit:contain;background:white;}
 
-.piece-main > img[src*='lia-basket-original.jpeg'], .card-media img[src*='lia-basket-original.jpeg'] {object-fit:contain;background:white;}
+.piece-main > img[src*='lia-basket-label-fixed.png'], .card-media img[src*='lia-basket-label-fixed.png'] {object-fit:contain;background:white;}

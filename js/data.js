@@ -65,7 +65,7 @@ const TRIKOMIK = {
   "category": "extras",
   "price": 200,
   "images": [
-    "img/lia-basket-original.jpeg"
+    "img/lia-basket-label-fixed.png"
   ],
   "color": "#8771ad",
   "description": [
@@ -100,7 +100,7 @@ const TRIKOMIK = {
   "category": "extras",
   "price": 200,
   "images": [
-    "img/belle-basket-original.jpeg"
+    "img/belle-basket-label-fixed.png"
   ],
   "color": "#c5b39b",
   "description": [
@@ -136,7 +136,7 @@ const TRIKOMIK = {
   "price": 140,
   "originalPrice": 200,
   "images": [
-    "img/aria-basket-original.jpeg"
+    "img/aria-basket-label-fixed.png"
   ],
   "color": "#aaa5ac",
   "description": [
@@ -171,7 +171,7 @@ const TRIKOMIK = {
   "category": "extras",
   "price": 190,
   "images": [
-    "img/mila-basket-original.jpeg"
+    "img/mila-basket-label-fixed.png"
   ],
   "color": "#b29a89",
   "description": [
@@ -208,7 +208,7 @@ const TRIKOMIK = {
   "price": 72,
   "originalPrice": 90,
   "images": [
-    "img/nola-basket-original.jpeg"
+    "img/nola-basket-label-fixed.png"
   ],
   "color": "#dc833c",
   "description": [
@@ -245,7 +245,7 @@ const TRIKOMIK = {
   "category": "extras",
   "price": 150,
   "images": [
-    "img/willow-basket-original.jpeg"
+    "img/willow-basket-label-fixed.png"
   ],
   "color": "#75958a",
   "description": [
@@ -281,7 +281,7 @@ const TRIKOMIK = {
   "category": "extras",
   "price": 140,
   "images": [
-    "img/jade-basket-original.jpeg"
+    "img/jade-basket-label-fixed.png"
   ],
   "color": "#208c73",
   "description": [
@@ -317,7 +317,7 @@ const TRIKOMIK = {
   "category": "extras",
   "price": 126,
   "images": [
-    "img/rosie-basket-original.jpeg"
+    "img/rosie-basket-label-fixed.png"
   ],
   "color": "#e6bfbd",
   "description": [
@@ -357,7 +357,7 @@ const TRIKOMIK = {
   "category": "bags",
   "price": 190,
   "images": [
-    "img/luna-pouch-original.jpeg"
+    "img/luna-pouch-label-fixed.png"
   ],
   "color": "#c6bca9",
   "description": [
@@ -434,7 +434,7 @@ const TRIKOMIK = {
   "category": "bags",
   "price": 349,
   "images": [
-    "img/sol-bag-original.jpeg"
+    "img/sol-bag-label-fixed.png"
   ],
   "color": "#f4df72",
   "description": [
@@ -473,7 +473,7 @@ const TRIKOMIK = {
   "price": 160,
   "originalPrice": 320,
   "images": [
-    "img/sage-clutch-original.jpeg"
+    "img/sage-clutch-label-fixed.png"
   ],
   "color": "#86a28c",
   "description": [
@@ -516,7 +516,7 @@ const TRIKOMIK = {
       category: "bags",
       price: 120,
       originalPrice: 240,
-      images: ["img/rose-heart-clutch-original.jpeg"],
+      images: ["img/rose-heart-clutch-label-fixed.png"],
       color: "#b59b99",
       description: [
         "ארנק קלאץ׳ לערב בגוון ורוד עתיק, סרוג בעבודת יד עם טקסטורה עשירה ולב סרוג תואם לקישוט. שילוב עדין שמוסיף נגיעה רומנטית להופעה.",
@@ -576,7 +576,7 @@ const TRIKOMIK = {
       shortName: "חיבוק ראשון לבת",
       category: "birth",
       price: 450,
-      images: ["img/first-hug-girl-original.jpeg"],
+      images: ["img/first-hug-girl-label-fixed.png"],
       color: "#d998a3",
       description: [
         "מארז לידה מרגש לתינוקת שהצטרפה למשפחה, המשלב פריטים שימושיים לימים הראשונים עם עבודת יד איכותית ומלאת אהבה. מתנה מפנקת ליולדת ולתינוקת, בתוך סלסלה סרוגה בגווני ורוד ולבן.",
@@ -592,7 +592,7 @@ const TRIKOMIK = {
       shortName: "Baby Bless",
       category: "birth",
       price: 300,
-      images: ["img/baby-bless-original.jpeg"],
+      images: ["img/baby-bless-label-fixed.png"],
       color: "#b8cfdf",
       description: [
         "מתנת לידה מרגשת המשלבת פריטים שימושיים לתינוק ופינוק ליולדת, בתוך סלסלה סרוגה בעבודת יד. שילוב של פרקטיות, עיצוב והמון אהבה ותשומת לב לכל פרט.",
@@ -683,7 +683,7 @@ const TRIKOMIK = {
       shortName: "Monkey",
       category: "birth",
       price: 350,
-      images: ["img/monkey-original.jpeg"],
+      images: ["img/monkey-label-fixed.png"],
       color: "#a9bfd6",
       description: [
         "מארז לידה מתוק בגווני תכלת, אפור ושמנת, בתוך סלסלה סרוגה בעבודת יד. מתנה חמה ומרגשת לתינוק שהצטרף למשפחה.",
@@ -707,7 +707,7 @@ const TRIKOMIK = {
       shortName: "Bunny",
       category: "birth",
       price: 350,
-      images: ["img/bunny-original.jpeg"],
+      images: ["img/bunny-label-fixed.png"],
       color: "#e3b7c3",
       description: [
         "מארז לידה מתוק בגווני ורוד ואפור מלאנז', בתוך סלסלה סרוגה בעבודת יד. מתנה חמה ומרגשת לתינוקת שהצטרפה למשפחה.",
@@ -727,17 +727,17 @@ const TRIKOMIK = {
 
     {
       slug: "honey-home", name: "מארז Honey & Home", shortName: "Honey & Home", category: "gifts", price: 120,
-      images: ["img/honey-home.jpg"], color: "#d9dce7",
+      images: ["img/honey-home-label-fixed.png"], color: "#d9dce7",
       description: ["תחתית סרוגה לסיר בעבודת יד, זוג כפות עץ, צנצנת דבש וחליטה מפנקת.", "מתנה מקסימה למארחים, למשפחה או פשוט למישהו שרוצים לשמח"], specs: []
     },
     {
       slug: "golden-table", name: "מארז Golden Table", shortName: "Golden Table", category: "gifts", price: 220,
-      images: ["img/golden-table.jpg"], color: "#d8b651",
+      images: ["img/golden-table-label-fixed.png"], color: "#d8b651",
       description: ["מארז חגיגי ושימושי בעבודת יד, סרוג מחוטי טריקו בגווני חרדל ושחור שילוב שמוסיף המון אופי וסטייל לשולחן.", "המארז כולל: סלסלה לסכו״ם, תחתית לסיר ו־4 תחתיות תואמות לכוסות.", "כל פריט נסרג בעבודת יד ובתשומת לב לפרטים, ליצירת סט מושלם לאירוח או כמתנה מיוחדת לחג"], specs: []
     },
     {
       slug: "olive-home", name: "מארז Olive Home", shortName: "Olive Home", category: "gifts", price: 220,
-      images: ["img/olive-home.jpg"], color: "#8e9753",
+      images: ["img/olive-home-label-fixed.png"], color: "#8e9753",
       description: ["מארז מלא בסטייל וחום של עבודת יד, מושלם כמתנה לחג, למארחים או פשוט לפינוק לבית 🤍", "המארז כולל:", "• תחתית סרוגה לסיר בעבודת יד", "• 4 תחתיות סרוגות לכוסות קפה", "• 2 כלי בישול ואפייה מעוצבים", "• אריזה חגיגית ומוכנה למתנה 🎁", "כל פריט סרוג בעבודת יד באהבה ובתשומת לב לפרטים"], specs: []
     },
     {
@@ -775,7 +775,7 @@ const TRIKOMIK = {
       category: "bags",
       price: 500,
       featured: true,
-      images: ["img/1a493f2d-5f13ecd5-ef43-4830-9cae-4d096118e31a-1600.webp"],
+      images: ["img/olive-luxe-bag-label-fixed.png"],
       color: "#7a7f4f",
       description: [
         "תיק סרוג בגוון זית עמוק, עם טקסטורה עשירה ובולטת וידיות סרוגות כחלק מעיצוב התיק.",
@@ -800,7 +800,7 @@ const TRIKOMIK = {
       price: 450,
       featured: true,
       images: [
-        "img/2f7213dc-f563ea16-6cde-42ab-a949-0ae0b28d5558-1600.webp",
+        "img/summer-bag-label-fixed.png",
         "img/2f7213dc-5ef7efbe-97fb-4fef-98eb-9e40eac0c357-1600.webp",
       ],
       color: "#e5897c",
@@ -826,7 +826,7 @@ const TRIKOMIK = {
       shortName: "Baby Treasure",
       category: "birth",
       price: 450,
-      images: ["img/39f67342-28383b58-d40a-442a-a358-3c59a84d4dbe-1600.webp"],
+      images: ["img/baby-treasure-blue-handmade-birth-case-label-fixed.png"],
       color: "#9db4ce",
       description: [
         "מארז לידה עשיר ומפנק, המסודר בתוך סלסלה סרוגה בעבודת יד בגווני כחול, אפור ולבן. מארז מרשים שמשלב פריטים שימושיים לימים הראשונים עם פריטים מתוקים שנבחרו כדי ליצור מתנה שלמה ומרגשת.",
@@ -853,7 +853,7 @@ const TRIKOMIK = {
       category: "birth",
       price: 450,
       images: [
-        "img/903c47b5-abf9c085-95dc-4a9e-a8b8-133782c78025-1600.webp",
+        "img/baby-love-a-handmade-birth-case-label-fixed.png",
       ],
       color: "#e3b7c3",
       description: [
@@ -879,7 +879,7 @@ const TRIKOMIK = {
       shortName: "Soleil",
       category: "bags",
       price: 350,
-      images: ["img/e6e18a34-849b6abc-6058-4a15-a458-29ca3405d561-1600.webp"],
+      images: ["img/soleil-bag-label-fixed.png"],
       color: "#ecc95e",
       description: [
         "תיק סרוג בגוון צהוב חמאה רך ומאיר, עם ידיות בגוון עץ כהה שיוצרות ניגוד אלגנטי ומיוחד.",
@@ -898,7 +898,7 @@ const TRIKOMIK = {
       shortName: "Sophie",
       category: "bags",
       price: 350,
-      images: ["img/7e35b93f-a04f6b61-cde0-4650-9624-e268c8de5f27-1600.webp"],
+      images: ["img/sophie-bag-label-fixed.png"],
       color: "#c9c9c9",
       description: [
         "תיק צד סרוג בעבודת יד בגוון אפור בהיר וקלאסי, עם טקסטורת סריגה עשירה ורצועת שרשרת כסופה שמוסיפה לו טאץ׳ אלגנטי ומעודן.",
@@ -918,7 +918,7 @@ const TRIKOMIK = {
       shortName: "Chloé",
       category: "bags",
       price: 300,
-      images: ["img/129f16e5-4369cd00-93a3-4d18-8a2d-d7882e9f628f-1600.webp"],
+      images: ["img/chlo-bag-label-fixed.png"],
       color: "#d9cfc0",
       description: [
         "תיק צד סרוג בעבודת יד בגוון בז׳ טבעי ואלגנטי, עם טקסטורת סריגה עשירה ורצועת שרשרת מוזהבת בשילוב שחור שמעניקה לו מראה קלאסי ומתוחכם.",
@@ -937,7 +937,7 @@ const TRIKOMIK = {
       shortName: "Ella",
       category: "bags",
       price: 300,
-      images: ["img/bbc9716b-c1cc5d33-f73b-46ab-8fe8-7bee6035e2f0-1600.webp"],
+      images: ["img/ella-bag-label-fixed.png"],
       color: "#7fd6d0",
       description: [
         "תיק יד סרוג בעבודת יד בגוון טורקיז רך ומרענן, עם טקסטורת סריגה עשירה וידיות עץ כהות שמעניקות לו מראה אלגנטי ומיוחד.",
@@ -955,7 +955,7 @@ const TRIKOMIK = {
       shortName: "Maya",
       category: "bags",
       price: 300,
-      images: ["img/c2b02547-15155369-983e-401c-a11e-a97014f2f944-1600.webp"],
+      images: ["img/maya-bag-label-fixed.png"],
       color: "#b07b4f",
       description: [
         "תיק יד סרוג בעבודת יד בגוון חום־קרמל חם, בשילוב ידית במבוק גדולה שמעניקה לו מראה טבעי, ייחודי ומלא סטייל.",
@@ -1040,7 +1040,7 @@ const TRIKOMIK = {
       shortName: "Wave",
       category: "bags",
       price: 250,
-      images: ["img/a7a3b4ef-fb2788a5-f4f3-4b29-8599-16fcc85125d3-1600.webp"],
+      images: ["img/wave-bag-label-fixed.png"],
       color: "#2c4a7c",
       description: [
         "תיק כתף סרוג בגוון כחול עמוק, בעיצוב ייחודי שמשלב את הרכות והטקסטורה של הסריגה עם רצועת חוליות שחורה שנותנת לו מראה מודרני ומלא נוכחות.",
@@ -1109,7 +1109,7 @@ const TRIKOMIK = {
       category: "bags",
       price: 180,
       slugReal: "rose-blush-bag",
-      images: ["img/f882537b-0a13cda0-befc-4233-8c7e-8c155c861752-1600.webp"],
+      images: ["img/rose-blush-bag-label-fixed.png"],
       color: "#e9c7c0",
       description: [
         "תיק סרוג בגוון ורוד פודרה עדין, בעיצוב נקי ורך עם ידיות סרוגות המשתלבות כחלק מהתיק.",
@@ -1151,7 +1151,7 @@ const TRIKOMIK = {
       shortName: "Sandy",
       category: "bags",
       price: 150,
-      images: ["img/acbac3fb-23aef953-7dd3-4918-8249-dd716b53d293-1600.webp"],
+      images: ["img/sandy-bag-label-fixed.png"],
       color: "#d6bf9a",
       description: [
         "תיק סרוג בגוון חול טבעי ורך, בעיצוב נקי ועל־זמני. הידיות הסרוגות הן חלק בלתי נפרד מהעיצוב ומעניקות לתיק מראה שלם, עשיר ומוקפד.",
