@@ -534,3 +534,5 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .piece-main > img[src*='jade-basket-original.jpeg'], .card-media img[src*='jade-basket-original.jpeg'] {object-fit:contain;background:white;}
 
 .piece-main > img[src*='willow-basket-original.jpeg'], .card-media img[src*='willow-basket-original.jpeg'] {object-fit:contain;background:white;}
+
+.piece-main > img[src*='nola-basket-original.jpeg'], .card-media img[src*='nola-basket-original.jpeg'] {object-fit:contain;background:white;}
