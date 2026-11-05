@@ -59,6 +59,41 @@ const TRIKOMIK = {
 
   products: [
 {
+  "slug": "lia-basket",
+  "name": "LIA — סלסלת נוי סרוגה",
+  "shortName": "LIA",
+  "category": "extras",
+  "price": 200,
+  "images": [
+    "img/lia-basket-original.jpeg"
+  ],
+  "color": "#8771ad",
+  "description": [
+    "סלסלה סרוגה בעבודת יד בגווני סגול ושמנת, עם פפיון תואם.",
+    "מתאימה לארגון פריטים קטנים על השידה, בסלון או בפינת הטיפוח, ומוסיפה נגיעה רכה וחמימה לבית."
+  ],
+  "details": [
+    "סרוגה בעבודת יד",
+    "גווני סגול ושמנת",
+    "פפיון תואם לקישוט"
+  ],
+  "specs": [
+    {
+      "label": "קוטר",
+      "value": "26 ס״מ"
+    },
+    {
+      "label": "גובה",
+      "value": "9 ס״מ"
+    },
+    {
+      "label": "משקל",
+      "value": "580 גרם"
+    }
+  ],
+  "note": "עלות משלוח לפי אזור החלוקה."
+},
+{
   "slug": "belle-basket",
   "name": "BELLE — סלסלת נוי סרוגה",
   "shortName": "BELLE",
