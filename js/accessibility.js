@@ -1,51 +1,18 @@
-/* Local display preferences; no third-party widget or tracking. */
+/* Local accessibility display preferences. */
 (() => {
-  const root = document.documentElement;
-  const host = document.createElement('div');
-  host.className = 'accessibility-tools';
-  host.innerHTML = `<button class="accessibility-toggle" aria-expanded="false" aria-controls="accessibility-panel" aria-label="פתיחת אפשרויות נגישות">♿ <span>נגישות</span></button>
-    <section id="accessibility-panel" aria-label="אפשרויות נגישות" hidden>
-      <h2>אפשרויות נגישות</h2>
-      <button type="button" data-setting="large" aria-pressed="false">הגדלת טקסט</button>
-      <button type="button" data-setting="contrast" aria-pressed="false">ניגודיות גבוהה</button>
-      <button type="button" data-setting="links" aria-pressed="false">הדגשת קישורים</button>
-      <button type="button" data-setting="motion" aria-pressed="false">הפחתת תנועה</button>
-      <button type="button" data-reset>איפוס הגדרות</button>
-      <p>לקבלת עזרה או לדיווח על קושי בנגישות: <a href="tel:+972529698082">052-969-8082</a></p>
-      <p>אפשרויות התצוגה אינן תחליף לבדיקת נגישות מלאה של האתר.</p>
-      <p><a href="#accessibility-statement" data-statement>הצהרת נגישות ופרטי קשר</a></p>
-      <button type="button" data-close>סגירה</button>
-    </section>`;
-  document.body.append(host);
-  const toggle = host.querySelector('.accessibility-toggle');
-  const panel = host.querySelector('section');
-  let settings = {};
-  try { settings = JSON.parse(localStorage.getItem('trikomik-accessibility') || '{}') || {}; } catch {}
-  const apply = () => {
-    host.querySelectorAll('[data-setting]').forEach(button => {
-      const enabled = settings[button.dataset.setting] === true;
-      root.classList.toggle('a11y-' + button.dataset.setting, enabled);
-      button.setAttribute('aria-pressed', String(enabled));
-    });
-    try { localStorage.setItem('trikomik-accessibility', JSON.stringify(settings)); } catch {}
-  };
-  const close = () => { panel.hidden = true; toggle.setAttribute('aria-expanded','false'); toggle.focus(); };
-  toggle.addEventListener('click', () => {
-    panel.hidden = !panel.hidden;
-    toggle.setAttribute('aria-expanded',String(!panel.hidden));
-    if (!panel.hidden) panel.querySelector('button').focus();
-  });
-  host.querySelectorAll('[data-setting]').forEach(button => button.addEventListener('click', () => {
-    settings[button.dataset.setting] = !settings[button.dataset.setting]; apply();
-  }));
-  host.querySelector('[data-reset]').addEventListener('click', () => { settings = {}; apply(); });
-  host.querySelector('[data-close]').addEventListener('click', close);
-  host.querySelector('[data-statement]').addEventListener('click', () => {
-    close();
-    const statement = document.getElementById('accessibility-statement');
-    statement.open = true;
-    statement.querySelector('summary').focus();
-  });
-  document.addEventListener('keydown', event => { if (event.key === 'Escape' && !panel.hidden) close(); });
-  apply();
+ const root=document.documentElement, host=document.createElement('div');host.className='accessibility-tools';
+ const options=[['contrast','◐','ניגודיות גבוהה'],['invert','☾','ניגודיות הפוכה'],['gray','◑','גוני אפור'],['links','↗','הדגשת קישורים'],['font','Aa','גופן קריא'],['images','▧','הסתרת תמונות'],['cursor','➤','סמן מוגדל'],['guide','☷','מדריך קריאה'],['headings','H','הדגשת כותרות'],['motion','Ⅱ','הפחתת תנועה']];
+ const adjust=[['size','גודל טקסט',100,150,10],['words','ריווח בין מילים',0,5,1],['letters','ריווח בין אותיות',0,3,1]];
+ host.innerHTML=`<button class="accessibility-toggle" aria-expanded="false" aria-controls="accessibility-panel" aria-label="פתיחת אפשרויות נגישות">♿ <span>נגישות</span></button><section id="accessibility-panel" aria-label="אפשרויות נגישות" hidden><header><h2>כלי נגישות</h2><button type="button" data-close aria-label="סגירת כלי נגישות">×</button></header><div class="a11y-grid">${options.map(([id,icon,label])=>`<button type="button" data-setting="${id}" aria-pressed="false"><span aria-hidden="true">${icon}</span>${label}</button>`).join('')}</div>${adjust.map(([id,label])=>`<fieldset><legend>${label}</legend><div class="a11y-stepper"><button type="button" data-adjust="${id}" data-direction="-1" aria-label="הקטנת ${label}">−</button><output data-value="${id}" aria-live="polite"></output><button type="button" data-adjust="${id}" data-direction="1" aria-label="הגדלת ${label}">+</button></div></fieldset>`).join('')}<button type="button" data-reset>איפוס כל ההגדרות</button><p>לקבלת עזרה: <a href="tel:+972529698082">052-969-8082</a></p><p>כלי התצוגה אינם תחליף לבדיקת נגישות מלאה של האתר.</p><a href="/#accessibility-statement" data-statement>הצהרת נגישות ופרטי קשר</a></section>`;
+ document.body.append(host);const toggle=host.querySelector('.accessibility-toggle'),panel=host.querySelector('section');let settings={};try{settings=JSON.parse(localStorage.getItem('trikomik-accessibility')||'{}')||{};}catch{}
+ if(settings.large&&!settings.size)settings.size=125;root.classList.remove('a11y-large');
+ const guide=document.createElement('div');guide.className='a11y-reading-guide';guide.setAttribute('aria-hidden','true');guide.hidden=true;document.body.append(guide);
+ function apply(){options.forEach(([id])=>{const on=settings[id]===true;root.classList.toggle('a11y-'+id,on);host.querySelector(`[data-setting="${id}"]`).setAttribute('aria-pressed',String(on));});adjust.forEach(([id,label,min,max,step])=>{const v=Math.max(min,Math.min(max,Number(settings[id])||min));settings[id]=v;host.querySelector(`[data-value="${id}"]`).textContent=id==='size'?v+'%':String(v);host.querySelectorAll(`[data-adjust="${id}"]`).forEach(b=>b.disabled=Number(b.dataset.direction)<0?v===min:v===max);});root.style.fontSize=settings.size+'%';root.style.setProperty('--a11y-words',settings.words*.1+'em');root.style.setProperty('--a11y-letters',settings.letters*.04+'em');root.classList.toggle('a11y-spacing',settings.words>0||settings.letters>0);guide.hidden=!settings.guide;try{localStorage.setItem('trikomik-accessibility',JSON.stringify(settings));}catch{}}
+ function close(){panel.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.focus();}
+ toggle.addEventListener('click',()=>{panel.hidden=!panel.hidden;toggle.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)host.querySelector('[data-close]').focus();});
+ host.querySelectorAll('[data-setting]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.setting;settings[id]=!settings[id];if(settings[id]&&['contrast','invert','gray'].includes(id))['contrast','invert','gray'].filter(x=>x!==id).forEach(x=>settings[x]=false);apply();}));
+ host.querySelectorAll('[data-adjust]').forEach(b=>b.addEventListener('click',()=>{const row=adjust.find(a=>a[0]===b.dataset.adjust);settings[row[0]]+=Number(b.dataset.direction)*row[4];apply();}));
+ host.querySelector('[data-close]').addEventListener('click',close);host.querySelector('[data-reset]').addEventListener('click',()=>{settings={};apply();});
+ host.querySelector('[data-statement]').addEventListener('click',()=>{close();const s=document.getElementById('accessibility-statement');if(s){s.open=true;s.querySelector('summary').focus();}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)close();});document.addEventListener('pointermove',e=>{if(settings.guide)guide.style.top=e.clientY+'px';},{passive:true});apply();
 })();
