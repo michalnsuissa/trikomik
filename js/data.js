@@ -59,6 +59,42 @@ const TRIKOMIK = {
 
   products: [
 {
+  "slug": "aria-basket",
+  "name": "ARIA — סלסלת נוי סרוגה",
+  "shortName": "ARIA",
+  "category": "extras",
+  "price": 140,
+  "originalPrice": 200,
+  "images": [
+    "img/aria-basket-original.jpeg"
+  ],
+  "color": "#aaa5ac",
+  "description": [
+    "סלסלה סרוגה בעבודת יד בשילוב גווני אפור, שחור ומנטה בהיר, עם פפיון תואם.",
+    "מתאימה לסידור פריטים קטנים בסלון, בכניסה לבית או על השידה, ומוסיפה נגיעה אישית ונעימה לבית."
+  ],
+  "details": [
+    "סרוגה בעבודת יד",
+    "שילוב גווני אפור, שחור ומנטה בהיר",
+    "פפיון תואם לקישוט"
+  ],
+  "specs": [
+    {
+      "label": "קוטר",
+      "value": "22 ס״מ"
+    },
+    {
+      "label": "גובה",
+      "value": "9 ס״מ"
+    },
+    {
+      "label": "משקל",
+      "value": "585 גרם"
+    }
+  ],
+  "note": "עלות משלוח לפי אזור החלוקה."
+},
+{
   "slug": "mila-basket",
   "name": "MILA — סלסלה סרוגה עם מכסה",
   "shortName": "MILA",
