@@ -70,6 +70,8 @@
 
   /* ---------- home ---------- */
   function home() {
+    const aboutIntro = B.description.replace(/^ברוכים הבאים ל-TrikoMik 💜 /, "");
+    const introEnd = aboutIntro.indexOf(". ") + 1;
     const currentCategory = location.pathname.match(/^\/categories\/([^/]+)\//)?.[1];
     document.title = currentCategory ? `${TRIKOMIK.categories.find(c => c.id === currentCategory)?.label || "החנות"} | TrikoMik` : "TrikoMik | תיקים סרוגים, מארזי לידה וסדנאות באשדוד";
     const app = $("#app");
@@ -104,14 +106,18 @@
         <div class="about-card">
           <div>
             <h2 class="about-heading"><span>ברוכים הבאים ל־</span><img class="about-heading-logo" src="${B.logo}" alt="TrikoMik"></h2>
-            <p>${TRIKOMIK.brand.description.replace(/^ברוכים הבאים ל-TrikoMik 💜 /, "")}</p>
-            <div class="about-personal">
+            <p>${aboutIntro.slice(0, introEnd)}</p>
+            <details class="about-more">
+              <summary>קרא עוד</summary>
+              <p>${aboutIntro.slice(introEnd).trim()}</p>
+              <div class="about-personal">
               <h3>למה לבחור בי?</h3>
               <p>מאחורי כל פריט של TrikoMik עומדת אני, מיכל, עם אהבה לסריגה, לצבעים ולפרטים הקטנים שהופכים מתנה לאישית ומרגשת.</p>
               <p>אני בוחרת את שילובי הצבעים, סורגת ביד ומקדישה תשומת לב לכל גימור. חשוב לי שהפריט שתבחרו יהיה יפה, שימושי וכזה שכיף להעניק וגם לקבל.</p>
               <p>מההתלבטות הראשונה ועד לבחירה הסופית, אני כאן כדי להקשיב ולעזור למצוא את מה שמתאים לכם. אפשר להתייעץ איתי על צבעים והתאמות אישיות, בהתאם למוצר ולחומרים הקיימים במלאי.</p>
               <p>כי בשבילי, כל הזמנה היא הזדמנות לשמח מישהו דרך משהו שיצרתי בידיים ועם הלב. 💜</p>
-            </div>
+              </div>
+            </details>
             <div class="about-social">
               <a href="${B.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.instagram}<span>Instagram</span></a>
               <a href="${B.facebook}" target="_blank" rel="noopener" aria-label="Facebook">${ICONS.facebook}<span>Facebook</span></a>
@@ -123,7 +129,9 @@
       </section>
 
       <section class="gallery container" id="gallery-anchor">
-        ${location.pathname.startsWith("/categories/") ? "" : shopTiles()}
+        ${currentCategory ? "" : `${shopTiles()}
+        <details class="shop-catalog-disclosure">
+          <summary class="btn btn-primary">לחנות</summary>`}
         <div class="gallery-head">
           <h2>החנות</h2>
           <p>כל פריט נסרג ביד, אחד לאחד. לחיצה על פריט תפתח את כל הפרטים והמידות</p>
@@ -139,6 +147,7 @@
         <div class="grid" id="grid"></div>
         <p id="gallery-status" class="sr-only" role="status"></p>
         <div id="grid-empty" class="grid-empty" hidden>אין פריטים בקטגוריה הזו כרגע</div>
+        ${currentCategory ? "" : "</details>"}
       </section>
 
       <section class="policy container" id="policy">
@@ -298,6 +307,7 @@
           <p class="piece-made">${p.category === "workshops" ? "זמן לעצמך, ליווי אישי ויצירה בידיים" : "כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים"}</p>
           <a class="btn btn-primary btn-block" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה</a>
           <a class="btn btn-outline btn-block" href="tel:${B.phone}">${ICONS.phone} לשיחה: ${B.phoneDisplay}</a>
+          ${p.category !== "workshops" ? shippingOptions(p) : ""}
           <div class="piece-desc">
             ${p.description.map((d) => `<p>${d}</p>`).join("")}
           </div>
@@ -338,6 +348,8 @@
 
     if (p.category === "birth") {
       const extras = $(".birth-extras", app);
+      const locality = $("#birth-delivery-locality", app);
+      const deliveryTotal = $("#birth-delivery-total", app);
       const greeting = $("#birth-greeting", extras);
       const cleanGreeting = value => Array.from(value.replace(/[#*0-9]\uFE0F?\u20E3|\p{Extended_Pictographic}|\p{Regional_Indicator}|\p{Emoji_Modifier}|[\u200D\uFE0E\uFE0F\u20E3\u{E0020}-\u{E007F}]/gu, "")).slice(0, 250).join("");
       greeting.addEventListener("input", () => {
@@ -354,15 +366,21 @@
         $(".greeting-text-field", extras).hidden = false;
         const balloon = $("input[name=birth-balloon]:checked", extras).value;
         const total = p.price + (card ? 45 : 0) + (balloon ? 18 : 0);
+        const shipping = locality.value ? TRIKOMIK.birthDelivery.price : 0;
         const choices = [];
         if (card) choices.push("כרטיס ברכה בעבודת יד של האמנית סיגל כהן — 45 ש״ח");
         if (greeting.value.trim()) choices.push("מלל הברכה:\n" + cleanGreeting(greeting.value).trim());
         if (balloon) choices.push("בלון הליום " + (balloon === "prince" ? "נסיך נולד" : "נסיכה נולדה") + " — 18 ש״ח");
-        $(".extras-total", extras).textContent = fmt(total);
-        const message = waMsg(p) + (choices.length ? "\nתוספות:\n" + choices.join("\n") : "") + "\nסה״כ: " + fmt(total) + " (לפני משלוח)";
+        $(".extras-total", extras).textContent = fmt(total + shipping);
+        $(".extras-total-label", extras).textContent = shipping ? "סה״כ כולל תוספות ומשלוח:" : "סה״כ כולל התוספות:";
+        $(".extras-delivery-note", extras).textContent = shipping ? `משלוח ל${locality.value} · ${fmt(shipping)} כולל מע״מ` : "לפני משלוח";
+        deliveryTotal.textContent = shipping ? `סה״כ להזמנה כולל משלוח: ${fmt(total + shipping)}` : "";
+        const deliveryLine = shipping ? `\nמשלוח ל${locality.value}: ${fmt(shipping)} כולל מע״מ` : "";
+        const message = waMsg(p) + (choices.length ? "\nתוספות:\n" + choices.join("\n") : "") + deliveryLine + "\nסה״כ: " + fmt(total + shipping) + (shipping ? " (כולל משלוח)" : " (לפני משלוח)");
         $$(".piece-info a[href^='https://wa.me/']", app).forEach(link => link.href = waLink(message));
       };
       extras.addEventListener("change", updateExtras);
+      locality.addEventListener("change", updateExtras);
       updateExtras();
     }
 
@@ -415,6 +433,27 @@
     }
   }
 
+  function shippingOptions(p) {
+    const delivery = TRIKOMIK.birthDelivery;
+    return `<details class="piece-shipping">
+      <summary class="btn btn-outline btn-block">${ICONS.truck} משלוחים</summary>
+      <div class="piece-shipping-content">
+        ${p.category === "birth" ? `
+          <p>משלוח ליישובים ברשימה: <strong>${fmt(delivery.price)} כולל מע״מ</strong></p>
+          <label for="birth-delivery-locality">בחירת יישוב למשלוח</label>
+          <select id="birth-delivery-locality">
+            <option value="">בחרו יישוב</option>
+            ${delivery.regions.map(([region, localities]) =>
+              `<optgroup label="${region}">${localities.map(name => `<option>${name}</option>`).join("")}</optgroup>`
+            ).join("")}
+          </select>
+          <p id="birth-delivery-total" role="status"></p>
+        ` : "<p>עלות המשלוח נקבעת לפי היעד ומתואמת לפני אישור ההזמנה.</p>"}
+        <p>איסוף עצמי באשדוד בתיאום מראש.</p>
+      </div>
+    </details>`;
+  }
+
   function birthExtras(p) {
     return `<section class="birth-extras" aria-labelledby="extras-heading">
       <h2 id="extras-heading" class="piece-sub">תוספות למארז</h2>
@@ -429,7 +468,7 @@
         </div>
         <p class="extras-caption">התוספת כוללת בלון הליום אחד. התמונות להמחשת הדגמים.</p>
       </fieldset>
-      <p class="extras-summary" role="status" aria-atomic="true">סה״כ כולל התוספות: <strong class="extras-total">${fmt(p.price)}</strong><small>לפני משלוח</small></p>
+      <p class="extras-summary" role="status" aria-atomic="true"><span class="extras-total-label">סה״כ כולל התוספות:</span> <strong class="extras-total">${fmt(p.price)}</strong><small class="extras-delivery-note">לפני משלוח</small></p>
       <a class="btn btn-primary btn-block" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנת המארז עם הבחירות שלי</a>
     </section>`;
   }

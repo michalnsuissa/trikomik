@@ -211,6 +211,43 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1.5rem;
 }
+.shop-catalog-disclosure > summary {
+  cursor: pointer;
+  display: flex;
+  margin: 1.5rem auto 0;
+  width: max-content;
+}
+.shop-catalog-disclosure > summary::after { content: "⌄"; }
+.shop-catalog-disclosure[open] > summary { margin-bottom: 2rem; }
+.shop-catalog-disclosure[open] > summary::after { transform: rotate(180deg); }
+.about-more > summary {
+  color: var(--purple-deep);
+  cursor: pointer;
+  font-weight: 700;
+  padding-block: .7rem;
+}
+.piece-shipping > summary { cursor: pointer; }
+.piece-shipping > summary::after { content: "⌄"; }
+.piece-shipping[open] > summary::after { transform: rotate(180deg); }
+.piece-shipping-content {
+  border: 1px solid #e6dced;
+  border-radius: var(--radius);
+  margin-block: .7rem 1rem;
+  padding: 1rem;
+}
+.piece-shipping-content label { display: block; font-weight: 700; margin-top: .7rem; }
+.piece-shipping-content select {
+  background: var(--card);
+  border: 1px solid var(--purple-deep);
+  border-radius: .6rem;
+  color: inherit;
+  font: inherit;
+  margin-block: .3rem .7rem;
+  min-height: 44px;
+  padding: .4rem .6rem;
+  width: 100%;
+}
+#birth-delivery-total:not(:empty) { color: var(--purple-deep); font-weight: 700; margin-bottom: .7rem; }
 .card {
   background: var(--card);
   border-radius: var(--radius);
