@@ -20,6 +20,7 @@ let shell = fs.readFileSync(path.join(root,'index.html'),'utf8');
 const card = p => `<a class="card ${p.category==='birth'?'card-tall':''}" href="/products/${p.slug}/"><span class="card-media"><img src="/${p.images[0]}" alt="${esc(p.name)}" loading="lazy"><span class="card-price">${money(p)}</span></span><span class="card-body"><span class="card-name">${esc(p.name)}</span><span class="card-more">לפרטים ←</span></span></a>`;
 const links = D.categories.filter(c=>c.id!=='all').map(c=>`<a class="chip" href="/categories/${c.id}/">${c.label}</a>`).join(' ');
 const organization = {'@type':'Organization',name:'TrikoMik',url:origin,logo:origin+'/'+D.brand.logo,telephone:D.brand.phone,sameAs:[D.brand.instagram,D.brand.facebook,D.brand.tiktok]};
+const website = { '@type': 'WebSite', url: origin + '/', name: D.brand.hebrewName, alternateName: D.brand.name };
 function page(url,title,description,body,entities=[]) {
  let html = shell.replace(/<main id="app"[\s\S]*?<\/main>/,`<main id="app" tabindex="-1">${body}</main>`);
  html=html.replace(/<title>.*?<\/title>/,`<title>${esc(title)}</title>`)
@@ -50,10 +51,13 @@ for(const p of D.products){
 for(const c of D.categories.filter(c=>c.id!=='all')){
  const url=origin+'/categories/'+c.id+'/';urls.push(url);
  const products=D.products.filter(p=>p.category===c.id);
- const body=`<section class="gallery container" id="gallery-anchor"><h1>${c.label}</h1><p>${categoryCopy[c.id]}</p><nav aria-label="קטגוריות החנות">${links}</nav><div class="grid" id="grid">${products.map(card).join('')}</div></section>`;
- const target=path.join(root,'categories',c.id);fs.mkdirSync(target,{recursive:true});fs.writeFileSync(path.join(target,'index.html'),page(url,c.label+' בעבודת יד באשדוד | TrikoMik',categoryCopy[c.id],body));
+ const heading = c.heading || c.label;
+ const title = c.heading ? `${c.heading} | ${D.brand.hebrewName}` : c.label + ' בעבודת יד באשדוד | TrikoMik';
+ const body=`<section class="gallery container" id="gallery-anchor"><h1>${esc(heading)}</h1><p>${esc(categoryCopy[c.id])}</p><nav aria-label="קטגוריות החנות">${links}</nav><div class="grid" id="grid">${products.map(card).join('')}</div></section>`;
+ const target=path.join(root,'categories',c.id);fs.mkdirSync(target,{recursive:true});fs.writeFileSync(path.join(target,'index.html'),page(url,title,categoryCopy[c.id],body));
 }
-const homeBody=`<section class="about container"><h1>TrikoMik | סריגה בעבודת יד באשדוד</h1><p>${esc(D.brand.description)}</p><nav aria-label="קטגוריות החנות">${links}</nav></section><section class="gallery container" id="gallery-anchor"><details class="shop-catalog-disclosure"><summary class="btn btn-primary">לחנות</summary><h2>החנות</h2><div class="grid" id="grid">${D.products.map(card).join('')}</div></details></section><section class="container"><h2>משלוחים</h2><p>${esc(D.delivery)}</p></section>`;
-fs.writeFileSync(path.join(root,'index.html'),page(origin+'/','TrikoMik | תיקים סרוגים, מארזי לידה וסדנאות באשדוד',D.brand.description,homeBody));
+const homeBody=`<section class="about container"><h1>${esc(D.brand.hebrewName)} | ${esc(D.brand.name)} – סריגה בעבודת יד באשדוד</h1><p>${esc(D.brand.description)}</p><nav aria-label="קטגוריות החנות">${links}</nav></section><section class="gallery container" id="gallery-anchor"><details class="shop-catalog-disclosure"><summary class="btn btn-primary">לחנות</summary><h2>החנות</h2><div class="grid" id="grid">${D.products.map(card).join('')}</div></details></section><section class="container"><h2>משלוחים</h2><p>${esc(D.delivery)}</p></section>`;
+const homeDescription = `${D.brand.hebrewName} | ${D.brand.name}. מארזי לידה, תיקים סרוגים, סלסלאות ומתנות בעבודת יד באשדוד. בחרו דגם, ראו מחירים ופרטים והזמינו ישירות ממיכל.`;
+fs.writeFileSync(path.join(root,'index.html'),page(origin+'/',D.brand.homeTitle,homeDescription,homeBody,[website]));
 fs.writeFileSync(path.join(root,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+urls.map(u=>`<url><loc>${u}</loc></url>`).join('\n')+'\n</urlset>\n');
 console.log(`Generated ${urls.length} crawlable pages.`);

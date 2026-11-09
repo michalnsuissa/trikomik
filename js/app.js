@@ -48,7 +48,9 @@
           document.querySelector(".hero")?.remove();
           document.querySelector("#about")?.remove();
           const heading = document.querySelector(".gallery-head h2");
-          const title = document.createElement("h1"); title.textContent = category.label; heading.replaceWith(title);
+          const title = document.createElement("h1");
+          title.textContent = category.heading || category.label;
+          heading.replaceWith(title);
           document.querySelector(".gallery-head p").textContent = category.description || "כל פריט נסרג ביד, אחד לאחד. לחיצה על פריט תפתח את כל הפרטים והמידות";
           requestAnimationFrame(() => document.getElementById("gallery-anchor").scrollIntoView());
         }
@@ -73,7 +75,10 @@
     const aboutIntro = B.description.replace(/^ברוכים הבאים ל-TrikoMik 💜 /, "");
     const introEnd = aboutIntro.indexOf(". ") + 1;
     const currentCategory = location.pathname.match(/^\/categories\/([^/]+)\//)?.[1];
-    document.title = currentCategory ? `${TRIKOMIK.categories.find(c => c.id === currentCategory)?.label || "החנות"} | TrikoMik` : "TrikoMik | תיקים סרוגים, מארזי לידה וסדנאות באשדוד";
+    const category = TRIKOMIK.categories.find(c => c.id === currentCategory);
+    document.title = category?.heading
+      ? `${category.heading} | ${B.hebrewName}`
+      : currentCategory ? `${category?.label || "החנות"} | ${B.name}` : B.homeTitle;
     const app = $("#app");
     const slides = TRIKOMIK.products.flatMap(p => p.images.map(src => ({ src, name: p.name, slug: p.slug })));
     for (let i = slides.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [slides[i], slides[j]] = [slides[j], slides[i]]; }
@@ -105,7 +110,7 @@
       <section class="about container" id="about">
         <div class="about-card">
           <div>
-            <h2 class="about-heading"><span>ברוכים הבאים ל־</span><img class="about-heading-logo" src="${B.logo}" alt="TrikoMik"></h2>
+            <h2 class="about-heading"><span>ברוכים הבאים ל${B.hebrewName}</span><img class="about-heading-logo" src="${B.logo}" alt="${B.name}"></h2>
             <p>${aboutIntro.slice(0, introEnd)}</p>
             <details class="about-more">
               <summary>קרא עוד</summary>
