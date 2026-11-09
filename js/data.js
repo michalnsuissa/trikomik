@@ -81,6 +81,43 @@ const TRIKOMIK = {
 
   products: [
 {
+  "slug": "merlot-bag",
+  "name": "Merlot — תיק סרוג מחוט דמוי עור",
+  "shortName": "Merlot",
+  "category": "bags",
+  "price": 450,
+  "color": "#742d42",
+  "images": [
+    "img/merlot-bag.png"
+  ],
+  "description": [
+    "תיק בגוון בורדו עמוק, סרוג בעבודת יד מחוט דמוי עור. הידית הסרוגה וטבעות המתכת בגוון זהב משלימות את המראה."
+  ],
+  "details": [
+    "סרוג בעבודת יד מחוט דמוי עור",
+    "ידית סרוגה בעבודת יד באורך מטר"
+  ],
+  "specs": [
+    {
+      "label": "אורך",
+      "value": "17 ס״מ"
+    },
+    {
+      "label": "רוחב",
+      "value": "22 ס״מ"
+    },
+    {
+      "label": "עומק",
+      "value": "5 ס״מ"
+    },
+    {
+      "label": "משקל",
+      "value": "440 גרם"
+    }
+  ],
+  "note": "עלות משלוח לפי אזור החלוקה."
+},
+{
   "slug": "lia-basket",
   "name": "LIA — סלסלת נוי סרוגה",
   "shortName": "LIA",

@@ -585,3 +585,5 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .piece-main > img[src*='belle-basket-label-fixed.png'], .card-media img[src*='belle-basket-label-fixed.png'] {object-fit:contain;background:white;}
 
 .piece-main > img[src*='lia-basket-label-fixed.png'], .card-media img[src*='lia-basket-label-fixed.png'] {object-fit:contain;background:white;}
+
+.piece-main > img[src$="merlot-bag.png"], .card-media img[src$="merlot-bag.png"] { object-fit: contain; background: white; }
