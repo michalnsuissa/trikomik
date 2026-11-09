@@ -236,7 +236,8 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
   padding: 1rem;
 }
 .piece-shipping-content label { display: block; font-weight: 700; margin-top: .7rem; }
-.piece-shipping-content select {
+.piece-shipping-content select,
+#coupon-code {
   background: var(--card);
   border: 1px solid var(--purple-deep);
   border-radius: .6rem;
@@ -247,6 +248,7 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
   padding: .4rem .6rem;
   width: 100%;
 }
+#coupon-status:not(:empty) { margin-top: .7rem; }
 #birth-delivery-total:not(:empty) { color: var(--purple-deep); font-weight: 700; margin-bottom: .7rem; }
 .card {
   background: var(--card);

@@ -5,6 +5,9 @@
   const fmt = (n) => new Intl.NumberFormat("he-IL").format(n) + " ₪";
   const waMsg = (p) =>
     `שלום מיכל! אני מתעניינ/ת ב${p.name} מהאתר של TrikoMik 💜`;
+  const couponCode = "TRIKO20";
+  const couponStarts = Date.parse("2026-11-27T00:00:00+02:00");
+  const couponEnds = Date.parse("2026-11-28T00:00:00+02:00");
 
   /* ---------- router ---------- */
   const routes = {
@@ -277,6 +280,7 @@
     const idx = TRIKOMIK.products.indexOf(p);
     const prev = TRIKOMIK.products[(idx - 1 + TRIKOMIK.products.length) % TRIKOMIK.products.length];
     const next = TRIKOMIK.products[(idx + 1) % TRIKOMIK.products.length];
+    const couponEligible = p.category !== "workshops" && !p.comingSoon && p.price > 0 && !(p.originalPrice > p.price);
 
     document.title = `${p.name} — TrikoMik`;
     const app = $("#app");
@@ -310,7 +314,8 @@
           <h1>${p.name}</h1>
           <p class="piece-price">${p.comingSoon ? "בקרוב" : p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</p>
           <p class="piece-made">${p.category === "workshops" ? "זמן לעצמך, ליווי אישי ויצירה בידיים" : "כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים"}</p>
-          <a class="btn btn-primary btn-block" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה</a>
+          <a class="btn btn-primary btn-block" id="piece-order" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה</a>
+          ${couponEligible ? couponOptions() : ""}
           <a class="btn btn-outline btn-block" href="tel:${B.phone}">${ICONS.phone} לשיחה: ${B.phoneDisplay}</a>
           ${p.category !== "workshops" ? shippingOptions(p) : ""}
           <div class="piece-desc">
@@ -351,6 +356,17 @@
       </section>
     `;
 
+    const orderLink = $("#piece-order", app);
+    const couponForm = $("#coupon-form", app);
+    const couponInput = $("#coupon-code", app);
+    const couponStatus = $("#coupon-status", app);
+    let couponApplied = false;
+    const productPrice = () => couponApplied ? Math.round(p.price * 80) / 100 : p.price;
+    const orderMessage = () => waMsg(p) + (couponApplied
+      ? `\nקופון ${couponCode} — 20% הנחה\nמחיר המוצר לאחר הנחה: ${fmt(productPrice())}`
+      : "");
+    let updateOrder = () => { orderLink.href = waLink(orderMessage()); };
+
     if (p.category === "birth") {
       const extras = $(".birth-extras", app);
       const locality = $("#birth-delivery-locality", app);
@@ -363,14 +379,14 @@
         if (removed) greeting.value = clean;
         $("#greeting-count", extras).textContent = `${Array.from(clean).length}/250 תווים`;
         $("#greeting-feedback", extras).textContent = removed ? "ניתן להזין עד 250 תווים, ללא סמיילים או אימוג׳י." : "";
-        updateExtras();
+        updateOrder();
       });
-      const updateExtras = () => {
+      updateOrder = () => {
         const card = $("#birth-card", extras).checked;
         greeting.disabled = false;
         $(".greeting-text-field", extras).hidden = false;
         const balloon = $("input[name=birth-balloon]:checked", extras).value;
-        const total = p.price + (card ? 45 : 0) + (balloon ? 18 : 0);
+        const total = productPrice() + (card ? 45 : 0) + (balloon ? 18 : 0);
         const shipping = locality.value ? TRIKOMIK.birthDelivery.price : 0;
         const choices = [];
         if (card) choices.push("כרטיס ברכה בעבודת יד של האמנית סיגל כהן — 45 ש״ח");
@@ -381,12 +397,45 @@
         $(".extras-delivery-note", extras).textContent = shipping ? `משלוח ל${locality.value} · ${fmt(shipping)} כולל מע״מ` : "לפני משלוח";
         deliveryTotal.textContent = shipping ? `סה״כ להזמנה כולל משלוח: ${fmt(total + shipping)}` : "";
         const deliveryLine = shipping ? `\nמשלוח ל${locality.value}: ${fmt(shipping)} כולל מע״מ` : "";
-        const message = waMsg(p) + (choices.length ? "\nתוספות:\n" + choices.join("\n") : "") + deliveryLine + "\nסה״כ: " + fmt(total + shipping) + (shipping ? " (כולל משלוח)" : " (לפני משלוח)");
-        $$(".piece-info a[href^='https://wa.me/']", app).forEach(link => link.href = waLink(message));
+        const message = orderMessage() + (choices.length ? "\nתוספות:\n" + choices.join("\n") : "") + deliveryLine + "\nסה״כ: " + fmt(total + shipping) + (shipping ? " (כולל משלוח)" : " (לפני משלוח)");
+        orderLink.href = waLink(message);
       };
-      extras.addEventListener("change", updateExtras);
-      locality.addEventListener("change", updateExtras);
-      updateExtras();
+      extras.addEventListener("change", updateOrder);
+      locality.addEventListener("change", updateOrder);
+      updateOrder();
+    }
+
+    if (couponForm) {
+      const updateCoupon = message => {
+        $(".piece-price", app).innerHTML = couponApplied
+          ? `<del aria-label="מחיר מקורי">${fmt(p.price)}</del> <span aria-label="מחיר אחרי קופון">${fmt(productPrice())}</span>`
+          : fmt(p.price);
+        couponStatus.textContent = message;
+        updateOrder();
+      };
+      couponForm.addEventListener("submit", event => {
+        event.preventDefault();
+        const now = Date.now();
+        const code = couponInput.value.trim().toUpperCase();
+        couponApplied = code === couponCode && now >= couponStarts && now < couponEnds;
+        if (code !== couponCode) updateCoupon("הקוד שהוזן אינו תקף.");
+        else if (now < couponStarts) updateCoupon("הקופון יהיה תקף ביום שישי, 27.11.2026, לפי שעון ישראל.");
+        else if (!couponApplied) updateCoupon("תוקף הקופון הסתיים.");
+        else updateCoupon(`הקופון הוחל. מחיר המוצר לאחר 20% הנחה: ${fmt(productPrice())}.`);
+      });
+      couponInput.addEventListener("input", () => {
+        couponApplied = false;
+        updateCoupon("");
+      });
+      orderLink.addEventListener("click", event => {
+        if (couponApplied && (Date.now() < couponStarts || Date.now() >= couponEnds)) {
+          event.preventDefault();
+          couponApplied = false;
+          updateCoupon("הקופון אינו תקף כעת. המחיר עודכן.");
+          couponForm.closest("details").open = true;
+          couponInput.focus();
+        }
+      });
     }
 
     const imageButtons = $$(".piece-gallery img");
@@ -436,6 +485,18 @@
         openLightbox($(".piece-gallery img").src)
       );
     }
+  }
+
+  function couponOptions() {
+    return `<details class="piece-shipping">
+      <summary class="btn btn-outline btn-block">יש לי קופון</summary>
+      <form id="coupon-form" class="piece-shipping-content">
+        <label for="coupon-code">קוד קופון</label>
+        <input id="coupon-code" type="text" dir="ltr" maxlength="32" autocomplete="off" spellcheck="false" required>
+        <button class="btn btn-outline" type="submit">החלת קופון</button>
+        <p id="coupon-status" role="status"></p>
+      </form>
+    </details>`;
   }
 
   function shippingOptions(p) {
