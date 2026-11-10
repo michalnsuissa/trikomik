@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <meta name="referrer" content="no-referrer">
+  <title>פרטי ההזמנה | TrikoMik</title>
+  <style>
+    body { margin: 0; padding: 1rem; background: #faf5ee; color: #2b2233; font: 1.0625rem/1.6 system-ui, sans-serif; }
+    main { max-width: 36rem; margin: 1rem auto; background: #fffdf9; padding: 1.25rem; border-radius: 1rem; }
+    label { display: block; font-weight: 600; margin: .8rem 0 .2rem; }
+    input, select { box-sizing: border-box; width: 100%; padding: .65rem; border: 1px solid #56357d; border-radius: .45rem; background: white; font: inherit; }
+    a { color: #56357d; }
+    .action { display: inline-block; background: #56357d; color: white; border: 0; border-radius: .6rem; padding: .75rem 1rem; font: inherit; cursor: pointer; }
+    :focus-visible { outline: 3px solid #56357d; outline-offset: 3px; }
+    #order-summary-details { white-space: pre-wrap; overflow-wrap: anywhere; }
+  </style>
+  <script defer src="/js/data.js"></script>
+  <script type="module" src="/js/shipping-order.js"></script>
+</head>
+<body>
+  <main>
+    <a id="order-back" href="/#gallery-anchor">חזרה לחנות</a>
+    <h1>פרטי הלקוח והמשלוח</h1>
+    <p id="order-product"></p>
+    <form id="order-details" method="post" hidden>
+      <label for="order-customer">שם מלא</label>
+      <input id="order-customer" name="customer" autocomplete="name" maxlength="80" pattern=".*\S.*" required>
+      <label for="order-phone">טלפון לתיאום</label>
+      <input id="order-phone" name="phone" type="tel" dir="ltr" autocomplete="tel" maxlength="20" pattern="[+0-9 \(\)\-]{8,20}" required>
+      <label for="order-delivery">איסוף עצמי או בחירת יישוב</label>
+      <select id="order-delivery" name="delivery" required aria-describedby="order-delivery-status">
+        <option value="">בחרו אפשרות</option>
+        <option value="pickup">איסוף עצמי באשדוד בתיאום מראש</option>
+        <option value="ashdod">משלוח חינם באשדוד</option>
+      </select>
+      <p id="order-delivery-status" role="status"></p>
+      <div id="order-address" hidden>
+        <label for="order-street">כתובת מלאה למשלוח (רחוב, מספר בית ודירה לפי הצורך)</label>
+        <input id="order-street" name="address" autocomplete="street-address" maxlength="180" pattern=".*\S.*">
+      </div>
+      <button class="action" type="submit">לסיכום ההזמנה</button>
+    </form>
+    <section id="order-summary" aria-labelledby="order-summary-heading" hidden>
+      <h2 id="order-summary-heading" tabindex="-1">סיכום ההזמנה</h2>
+      <p id="order-summary-details"></p>
+      <p>נמשיך בוואטסאפ לאישור הזמינות והמחיר הסופי לפני התשלום.</p>
+      <a id="order-send" class="action" rel="noreferrer" target="_blank">להמשך בוואטסאפ</a>
+    </section>
+    <noscript>יש להפעיל JavaScript כדי למלא את פרטי ההזמנה.</noscript>
+  </main>
+</body>
+</html>

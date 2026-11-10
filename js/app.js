@@ -162,7 +162,9 @@
         <div class="policy-grid">
           <div class="policy-block">
             <h3><span class="icon">${ICONS.truck}</span> משלוחים</h3>
-            <p>${TRIKOMIK.delivery}</p>
+            <p>מארזי לידה: איסוף עצמי באשדוד בתיאום מראש, או משלוח ליישובים בעמוד המארז ב־50 ש״ח כולל מע״מ.</p>
+            <p>שאר המוצרים: משלוח באשדוד ללא תשלום, או איסוף עצמי ללא תשלום בתיאום מראש. מחוץ לאשדוד, דואר ישראל אקספרס ליישובים שברשימה. עד 1 ק״ג כולל אריזה ב־67 ש״ח, ומעל 1 ק״ג ועד 2 ק״ג ב־73 ש״ח.</p>
+            <p>ניסיון מסירה תוך 2–3 ימי עסקים לפי היישוב, ממסירת החבילה לדואר. זמן הכנת ההזמנה מתווסף לזמן המשלוח.</p>
           </div>
           <div class="policy-block"><h3>קנייה בלב שקט</h3><p>${TRIKOMIK.returnPolicyIntro}</p><details class="policy-disclosure">
             <summary>לפירוט תנאי הביטולים וההחזרות</summary>
@@ -281,6 +283,7 @@
     const prev = TRIKOMIK.products[(idx - 1 + TRIKOMIK.products.length) % TRIKOMIK.products.length];
     const next = TRIKOMIK.products[(idx + 1) % TRIKOMIK.products.length];
     const couponEligible = p.category !== "workshops" && !p.comingSoon && p.price > 0 && !(p.originalPrice > p.price);
+    const pieceNote = p.category === "birth" ? p.note : p.note?.replace(/עלות משלוח לפי אזור החלוקה\.?/g, "").trim();
 
     document.title = `${p.name} — TrikoMik`;
     const app = $("#app");
@@ -327,7 +330,7 @@
                  <ul class="piece-details">${p.details.map((d) => `<li>${d}</li>`).join("")}</ul>`
               : ""
           }
-          ${p.note ? `<p class="piece-note">${p.note}</p>` : ""}
+          ${pieceNote ? `<p class="piece-note">${pieceNote}</p>` : ""}
           ${
             p.specs.length
               ? `<h2 class="piece-sub">מאפיינים</h2>
@@ -366,6 +369,28 @@
       ? `\nקופון ${couponCode} — 20% הנחה\nמחיר המוצר לאחר הנחה: ${fmt(productPrice())}`
       : "");
     let updateOrder = () => { orderLink.href = waLink(orderMessage()); };
+
+    if (!p.comingSoon && !["birth", "workshops"].includes(p.category) && p.price > 0) {
+      const deliveryForm = $("#product-delivery-form", app);
+      const destination = $("#shipping-destination", deliveryForm);
+      const deliveryStatus = $("#product-delivery-status", app);
+      const couponField = $('input[name="coupon"]', deliveryForm);
+      orderLink.removeAttribute("target");
+      updateOrder = () => {
+        const query = new URLSearchParams({ product: p.slug });
+        if (destination.value) query.set("delivery", destination.value);
+        if (couponApplied) query.set("coupon", couponCode);
+        orderLink.href = "/order/?" + query;
+        couponField.value = couponApplied ? couponCode : "";
+      };
+      updateOrder();
+      destination.addEventListener("change", updateOrder);
+      import("/js/shipping-order.js").then(({ loadShippingDestinations }) =>
+        loadShippingDestinations(destination, deliveryStatus)
+      ).catch(() => {
+        deliveryStatus.textContent = "רשימת היישובים לא נטענה. אפשר לרענן את העמוד או להמשיך לפרטי ההזמנה.";
+      });
+    }
 
     if (p.category === "birth") {
       const extras = $(".birth-extras", app);
@@ -514,8 +539,24 @@
             ).join("")}
           </select>
           <p id="birth-delivery-total" role="status"></p>
-        ` : "<p>עלות המשלוח נקבעת לפי היעד ומתואמת לפני אישור ההזמנה.</p>"}
-        <p>איסוף עצמי באשדוד בתיאום מראש.</p>
+          <p>איסוף עצמי באשדוד בתיאום מראש.</p>
+        ` : `
+          <p>משלוח באשדוד ללא תשלום או איסוף עצמי באשדוד ללא תשלום בתיאום מראש.</p>
+          <p>משלוח אקספרס של דואר ישראל ליישובים שברשימה. עד 1 ק״ג כולל אריזה ב־67 ש״ח, ומעל 1 ק״ג ועד 2 ק״ג ב־73 ש״ח.</p>
+          ${!p.comingSoon && p.price > 0 ? `
+            <form id="product-delivery-form" action="/order/">
+              <input type="hidden" name="product" value="${p.slug}">
+              <input type="hidden" name="coupon">
+              <label for="shipping-destination">איסוף עצמי או בחירת יישוב</label>
+              <select name="delivery" id="shipping-destination" required aria-describedby="product-delivery-status">
+                <option value="">בחרו אפשרות</option>
+                <option value="pickup">איסוף עצמי באשדוד בתיאום מראש</option>
+                <option value="ashdod">משלוח חינם באשדוד</option>
+              </select>
+              <p id="product-delivery-status" role="status"></p>
+              <button class="btn btn-outline btn-block" type="submit">לפרטי ההזמנה</button>
+            </form>` : ""}
+        `}
       </div>
     </details>`;
   }
