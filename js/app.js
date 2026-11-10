@@ -307,7 +307,8 @@
     const next = TRIKOMIK.products[(idx + 1) % TRIKOMIK.products.length];
     const couponEligible = p.category !== "workshops" && !p.comingSoon && p.price > 0 && !(p.originalPrice > p.price);
     const pieceNote = p.category === "birth" ? p.note : p.note?.replace(/עלות משלוח לפי אזור החלוקה\.?/g, "").trim();
-    const directCheckout = !p.comingSoon && p.price > 0 && (p.category === "bags" || p.slug === "baby-treasure-small");
+    const birth = p.category === "birth";
+    const directCheckout = !p.comingSoon && p.price > 0 && (p.category === "bags" || birth);
     const orderDetails = !p.comingSoon && !["birth", "workshops"].includes(p.category) && p.price > 0;
 
     document.title = `${p.name} — TrikoMik`;
@@ -344,11 +345,12 @@
           <p class="piece-made">${p.category === "workshops" ? "זמן לעצמך, ליווי אישי ויצירה בידיים" : "כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים"}</p>
           ${directCheckout ? `
             <p class="stock-status" data-stock-slug="${p.slug}" role="status" hidden></p>
-            <a class="btn btn-primary btn-block" id="piece-checkout" data-purchase-slug="${p.slug}" href="${checkoutBase}${p.slug}">להזמנה ותשלום מאובטח</a>
+            ${birth ? `<button type="button" class="btn btn-primary btn-block" id="piece-checkout" data-purchase-slug="${p.slug}">לבחירת איסוף או משלוח</button>` :
+            `<a class="btn btn-primary btn-block" id="piece-checkout" data-purchase-slug="${p.slug}" href="${checkoutBase}${p.slug}">להזמנה ותשלום מאובטח</a>`}
           ` : orderDetails ? `<a class="btn btn-primary btn-block" id="piece-checkout" href="/order/?product=${p.slug}">לפרטי ההזמנה</a>` : ""}
           ${couponEligible ? couponOptions() : ""}
           <a class="btn btn-outline btn-block" href="tel:${B.phone}">${ICONS.phone} לשיחה: ${B.phoneDisplay}</a>
-          ${p.category !== "workshops" ? shippingOptions(p) : ""}
+          ${!birth && p.category !== "workshops" ? shippingOptions(p) : ""}
           <div class="piece-desc">
             ${p.description.map((d) => `<p>${d}</p>`).join("")}
           </div>
@@ -372,7 +374,7 @@
                  </dl>`
               : ""
           }
-          ${p.category === "birth" ? birthExtras(p) : ""}
+          ${birth ? birthExtras(p, directCheckout) : ""}
           <a class="btn btn-outline btn-block piece-whatsapp" id="piece-order" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} רוצים לדבר איתי?</a>
           <div class="piece-social">
             <a href="${B.instagram}" target="_blank" rel="noopener">${ICONS.instagram}</a>
@@ -433,11 +435,12 @@
       });
     }
 
-    if (p.category === "birth") {
+    if (birth) {
       const extras = $(".birth-extras", app);
       const locality = $("#birth-delivery-locality", app);
-      const deliveryTotal = $("#birth-delivery-total", app);
+      checkoutLink?.addEventListener("click", () => locality.focus());
       const greeting = $("#birth-greeting", extras);
+      const couponField = $('input[name="coupon"]', extras);
       const cleanGreeting = value => Array.from(value.replace(/[#*0-9]\uFE0F?\u20E3|\p{Extended_Pictographic}|\p{Regional_Indicator}|\p{Emoji_Modifier}|[\u200D\uFE0E\uFE0F\u20E3\u{E0020}-\u{E007F}]/gu, "")).slice(0, 250).join("");
       greeting.addEventListener("input", () => {
         const clean = cleanGreeting(greeting.value);
@@ -451,23 +454,24 @@
         const card = $("#birth-card", extras).checked;
         greeting.disabled = false;
         $(".greeting-text-field", extras).hidden = false;
-        const balloon = $("input[name=birth-balloon]:checked", extras).value;
+        const balloon = $("input[name=balloon]:checked", extras).value;
         const total = productPrice() + (card ? 45 : 0) + (balloon ? 18 : 0);
-        const shipping = locality.value ? TRIKOMIK.birthDelivery.price : 0;
+        const pickup = locality.value === "pickup";
+        const shipping = locality.value && !pickup ? TRIKOMIK.birthDelivery.price : 0;
         const choices = [];
         if (card) choices.push("כרטיס ברכה בעבודת יד של האמנית סיגל כהן — 45 ש״ח");
         if (greeting.value.trim()) choices.push("מלל הברכה:\n" + cleanGreeting(greeting.value).trim());
         if (balloon) choices.push("בלון הליום " + (balloon === "prince" ? "נסיך נולד" : "נסיכה נולדה") + " — 18 ש״ח");
         $(".extras-total", extras).textContent = fmt(total + shipping);
         $(".extras-total-label", extras).textContent = shipping ? "סה״כ כולל תוספות ומשלוח:" : "סה״כ כולל התוספות:";
-        $(".extras-delivery-note", extras).textContent = shipping ? `משלוח ל${locality.value} · ${fmt(shipping)} כולל מע״מ` : "לפני משלוח";
-        deliveryTotal.textContent = shipping ? `סה״כ להזמנה כולל משלוח: ${fmt(total + shipping)}` : "";
-        const deliveryLine = shipping ? `\nמשלוח ל${locality.value}: ${fmt(shipping)} כולל מע״מ` : "";
-        const message = orderMessage() + (choices.length ? "\nתוספות:\n" + choices.join("\n") : "") + deliveryLine + "\nסה״כ: " + fmt(total + shipping) + (shipping ? " (כולל משלוח)" : " (לפני משלוח)");
+        const deliveryText = shipping ? `משלוח ל${locality.value} · ${fmt(shipping)} כולל מע״מ` :
+          pickup ? "איסוף עצמי באשדוד ללא תשלום, בתיאום מראש" : "לפני בחירת איסוף או משלוח";
+        $(".extras-delivery-note", extras).textContent = deliveryText;
+        if (couponField) couponField.value = couponApplied ? couponCode : "";
+        const message = orderMessage() + (choices.length ? "\nתוספות:\n" + choices.join("\n") : "") + "\n" + deliveryText + "\nסה״כ: " + fmt(total + shipping);
         orderLink.href = waLink(message);
       };
       extras.addEventListener("change", updateOrder);
-      locality.addEventListener("change", updateOrder);
       updateOrder();
     }
 
@@ -566,22 +570,9 @@
   }
 
   function shippingOptions(p) {
-    const delivery = TRIKOMIK.birthDelivery;
     return `<details class="piece-shipping">
       <summary class="btn btn-outline btn-block">${ICONS.truck} משלוחים</summary>
       <div class="piece-shipping-content">
-        ${p.category === "birth" ? `
-          <p>משלוח ליישובים ברשימה: <strong>${fmt(delivery.price)} כולל מע״מ</strong></p>
-          <label for="birth-delivery-locality">בחירת יישוב למשלוח</label>
-          <select id="birth-delivery-locality">
-            <option value="">בחרו יישוב</option>
-            ${delivery.regions.map(([region, localities]) =>
-              `<optgroup label="${region}">${localities.map(name => `<option>${name}</option>`).join("")}</optgroup>`
-            ).join("")}
-          </select>
-          <p id="birth-delivery-total" role="status"></p>
-          <p>איסוף עצמי באשדוד בתיאום מראש.</p>
-        ` : `
           <p>משלוח באשדוד ללא תשלום או איסוף עצמי באשדוד ללא תשלום בתיאום מראש.</p>
           <p>משלוח אקספרס של דואר ישראל ליישובים שברשימה. עד 1 ק״ג כולל אריזה ב־67 ש״ח, ומעל 1 ק״ג ועד 2 ק״ג ב־73 ש״ח.</p>
           ${!p.comingSoon && p.price > 0 ? `
@@ -597,26 +588,44 @@
               <p id="product-delivery-status" role="status"></p>
               <button class="btn btn-outline btn-block" type="submit">לפרטי ההזמנה</button>
             </form>` : ""}
-        `}
       </div>
     </details>`;
   }
 
-  function birthExtras(p) {
+  function birthExtras(p, directCheckout) {
+    const delivery = TRIKOMIK.birthDelivery;
     return `<section class="birth-extras" aria-labelledby="extras-heading">
+      <form action="${checkoutBase}${p.slug}/start" method="post">
       <h2 id="extras-heading" class="piece-sub">תוספות למארז</h2>
       <p class="extras-intro">עוד קצת שמחה למתנה שלך</p>
-      <label class="extra-card-option"><input type="checkbox" id="birth-card"><span>כרטיס ברכה בעבודת יד של האמנית סיגל כהן</span><strong>45 ₪</strong></label><div class="greeting-card-gallery" aria-label="תמונות כרטיסי הברכה של סיגל כהן"><img src="/img/sigal-card-girl.jpeg" alt="כרטיס ברכה של סיגל כהן — פיל ורוד"><img src="/img/sigal-card-boy-welcome.jpeg" alt="כרטיס ברכה של סיגל כהן — Welcome Baby Boy"><img src="/img/sigal-card-boy-bear.jpeg" alt="כרטיס ברכה של סיגל כהן — Baby Boy עם דובי"></div>
-      <div class="greeting-text-field"><label for="birth-greeting">ברכה למקבל/ת המתנה (אופציונלי)</label><textarea id="birth-greeting" rows="4" dir="auto" aria-describedby="greeting-help greeting-count greeting-feedback" placeholder="לדוגמה: מזל טוב להולדת הבת! מאחלים לכם אושר, בריאות והמון רגעים יפים יחד."></textarea><p id="greeting-help">אפשר להוסיף ברכה גם ללא רכישת כרטיס מעוצב. עד 250 תווים, ללא סמיילים או אימוג׳י. הטקסט המוצג בשדה הוא לדוגמה בלבד.</p><span id="greeting-count">0/250 תווים</span><p id="greeting-feedback" role="status"></p></div><fieldset class="balloon-options">
+      <label class="extra-card-option"><input type="checkbox" id="birth-card" name="card" value="yes"><span>כרטיס ברכה בעבודת יד של האמנית סיגל כהן</span><strong>45 ₪</strong></label><div class="greeting-card-gallery" aria-label="תמונות כרטיסי הברכה של סיגל כהן"><img src="/img/sigal-card-girl.jpeg" alt="כרטיס ברכה של סיגל כהן — פיל ורוד"><img src="/img/sigal-card-boy-welcome.jpeg" alt="כרטיס ברכה של סיגל כהן — Welcome Baby Boy"><img src="/img/sigal-card-boy-bear.jpeg" alt="כרטיס ברכה של סיגל כהן — Baby Boy עם דובי"></div>
+      <div class="greeting-text-field"><label for="birth-greeting">ברכה למקבל/ת המתנה (אופציונלי)</label><textarea id="birth-greeting" name="greeting" rows="4" dir="auto" aria-describedby="greeting-help greeting-count greeting-feedback" placeholder="לדוגמה: מזל טוב להולדת הבת! מאחלים לכם אושר, בריאות והמון רגעים יפים יחד."></textarea><p id="greeting-help">אפשר להוסיף ברכה גם ללא רכישת כרטיס מעוצב. עד 250 תווים, ללא סמיילים או אימוג׳י. הטקסט המוצג בשדה הוא לדוגמה בלבד.</p><span id="greeting-count">0/250 תווים</span><p id="greeting-feedback" role="status"></p></div><fieldset class="balloon-options">
         <legend>בלון הליום <span>18 ₪ לבלון</span></legend>
-        <label class="no-balloon"><input type="radio" name="birth-balloon" value="" checked> ללא בלון</label>
+        <label class="no-balloon"><input type="radio" name="balloon" value="" checked> ללא בלון</label>
         <div class="balloon-grid">
-          <label class="balloon-choice"><img src="img/balloon-prince.jpg" alt="דוגמת בלון הליום נסיך נולד" loading="lazy"><span><input type="radio" name="birth-balloon" value="prince"> נסיך נולד</span></label>
-          <label class="balloon-choice"><img src="img/balloon-princess.jpg" alt="בלון הליום נסיכה נולדה" loading="lazy"><span><input type="radio" name="birth-balloon" value="princess"> נסיכה נולדה</span></label>
+          <label class="balloon-choice"><img src="img/balloon-prince.jpg" alt="דוגמת בלון הליום נסיך נולד" loading="lazy"><span><input type="radio" name="balloon" value="prince"> נסיך נולד</span></label>
+          <label class="balloon-choice"><img src="img/balloon-princess.jpg" alt="בלון הליום נסיכה נולדה" loading="lazy"><span><input type="radio" name="balloon" value="princess"> נסיכה נולדה</span></label>
         </div>
         <p class="extras-caption">התוספת כוללת בלון הליום אחד. התמונות להמחשת הדגמים.</p>
       </fieldset>
+      <div class="piece-shipping-content">
+        <label for="birth-delivery-locality">איסוף עצמי או בחירת יישוב למשלוח</label>
+        <select id="birth-delivery-locality" name="delivery" required>
+          <option value="">בחרו אפשרות</option>
+          <option value="pickup">איסוף עצמי חינם באשדוד בתיאום מראש</option>
+          ${delivery.regions.map(([region, localities]) =>
+            `<optgroup label="${region}">${localities.map(name => `<option>${name}</option>`).join("")}</optgroup>`
+          ).join("")}
+        </select>
+        <p>משלוח ליישובים ברשימה ב־${fmt(delivery.price)} כולל מע״מ.</p>
+      </div>
       <p class="extras-summary" role="status" aria-atomic="true"><span class="extras-total-label">סה״כ כולל התוספות:</span> <strong class="extras-total">${fmt(p.price)}</strong><small class="extras-delivery-note">לפני משלוח</small></p>
+      ${directCheckout ? `<div data-purchase-slug="${p.slug}">
+        <input type="hidden" name="coupon">
+        <p>הברכה ותוספות המארז יועברו למסך פרטי ההזמנה. <a href="/privacy/">הצהרת פרטיות</a></p>
+        <button type="submit" class="btn btn-primary btn-block">להמשך לתשלום</button>
+      </div>` : ""}
+      </form>
     </section>`;
   }
 
