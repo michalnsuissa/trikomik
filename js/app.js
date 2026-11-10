@@ -184,6 +184,7 @@
         <h2 id="reviews-title">לקוחות ממליצים</h2>
         <p>כל פריט נסרג באהבה, והכי מרגש לשמוע איך הוא השתלב אצלכם בבית או שימח מישהו אהוב.</p>
         <p>אפשר למצוא המלצות על TrikoMik גם בגוגל וגם באתר ״עסקים עושים עסקים״.</p>
+        <p>שליחת המלצה היא לבחירתכם. מיכל ב־TrikoMik מקבלת את הפרטים לבדיקה באמצעות Cloudflare. אחרי אישור, השם, ההמלצה והתמונה שתבחרו לצרף עשויים להתפרסם באתר. <a href="/privacy/">הצהרת פרטיות וזכויות עיון ותיקון</a></p>
         <form id="review-form" class="review-form">
 <h3>שתפו אותנו בחוויה שלכם</h3><label>השם שיוצג לצד ההמלצה<input name="name" required maxlength="60" autocomplete="name"></label><label>ההמלצה שלכם<textarea name="text" required minlength="10" maxlength="1500" rows="5"></textarea></label><label>תמונה (לא חובה)<input name="photo" type="file" accept="image/jpeg,image/png,image/webp"><small>JPG, PNG או WebP, עד 4 מגה־בייט.</small></label><label class="review-consent"><input name="consent" type="checkbox" required>אני מאשר/ת לפרסם באתר את השם, ההמלצה והתמונה שצירפתי, ויש לי רשות לשתף את התמונה.</label><p>ההמלצה תישמר ותועבר לבדיקה לפני פרסומה באתר.</p><button class="btn btn-primary" type="submit">שליחת המלצה</button><p role="status" id="review-status" aria-live="polite"></p></form><div class="reviews-actions"><a class="btn btn-outline" href="https://www.google.com/maps/place/TrikoMik/data=!4m2!3m1!1s0x1502a3097aab1d33:0x50b11b3d99a5fce0" target="_blank" rel="noopener">להמלצות בגוגל ↗</a><a class="btn btn-outline" href="https://www.bizmakebiz.co.il/Members/e6665745-7c43-4190-a992-0cea4d85d3d4/Opinions" target="_blank" rel="noopener">להמלצות בעסקים עושים עסקים ↗</a></div>
       </section>
@@ -686,6 +687,13 @@
   const y = $("#year");
   if (y) y.textContent = new Date().getFullYear();
   const footerSocial = $("#footer-social");
+  const footerNav = $(".footer-nav");
+  if (footerNav && !footerNav.querySelector('a[href="/privacy/"]')) {
+    const privacyLink = document.createElement("a");
+    privacyLink.href = "/privacy/";
+    privacyLink.textContent = "הצהרת פרטיות";
+    footerNav.append(privacyLink);
+  }
   if (footerSocial) {
     footerSocial.innerHTML = `
       <a href="${B.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${ICONS.instagram}</a>
