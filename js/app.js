@@ -33,7 +33,9 @@
     /* in-page anchors (#about, #policy) — let the browser scroll natively */
     if (hash && hash[1] !== "/") {
       if (!$(".hero", $("#app"))) home(); /* render home before resolving an anchor */
-      requestAnimationFrame(() => document.getElementById(hash.slice(1))?.scrollIntoView());
+      const target = document.getElementById(hash.slice(1));
+      if (hash === "#product-catalog" && target) target.open = true;
+      requestAnimationFrame(() => target?.scrollIntoView());
       return;
     }
     stopHeroCarousel();
@@ -61,6 +63,9 @@
     }
   }
   window.addEventListener("hashchange", navigate);
+  $('header a[href="/#product-catalog"]')?.addEventListener("click", () => {
+    if (location.pathname === "/" && location.hash === "#product-catalog") navigate();
+  });
 
   /* ---------- shared header/footer bits ---------- */
   function waLink(text) {
@@ -138,7 +143,7 @@
 
       <section class="gallery container" id="gallery-anchor">
         ${currentCategory ? "" : `${shopTiles()}
-        <details class="shop-catalog-disclosure">
+        <details id="product-catalog" class="shop-catalog-disclosure">
           <summary class="btn btn-primary">לחנות</summary>`}
         <div class="gallery-head">
           <h2>החנות</h2>
