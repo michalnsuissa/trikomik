@@ -318,6 +318,10 @@
           <p class="piece-price">${p.comingSoon ? "בקרוב" : p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</p>
           <p class="piece-made">${p.category === "workshops" ? "זמן לעצמך, ליווי אישי ויצירה בידיים" : "כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים"}</p>
           <a class="btn btn-primary btn-block" id="piece-order" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה</a>
+          ${p.slug === "baby-treasure-small" ? `
+            <a class="btn btn-outline btn-block" href="https://trikomik-services.michal-trikomik.workers.dev/checkout/baby-treasure-small">להזמנה ותשלום מאובטח</a>
+            <p class="piece-note">במסלול התשלום בוחרים איסוף או משלוח ותוספות, ורואים את הסכום הסופי לפני המעבר ל־HYP.</p>
+          ` : ""}
           ${couponEligible ? couponOptions() : ""}
           <a class="btn btn-outline btn-block" href="tel:${B.phone}">${ICONS.phone} לשיחה: ${B.phoneDisplay}</a>
           ${p.category !== "workshops" ? shippingOptions(p) : ""}
