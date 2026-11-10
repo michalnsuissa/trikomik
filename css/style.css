@@ -431,6 +431,9 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .piece-specs dt { color: var(--ink-soft); font-size: 0.92rem; }
 .piece-specs dd { color: var(--ink); font-weight: 600; font-size: 0.95rem; text-align: left; }
 .piece-social { display: flex; gap: 0.9rem; margin-top: 1.6rem; }
+.piece-whatsapp { margin-top: 1.4rem; }
+.stock-status { color: var(--purple-deep); font-weight: 800; }
+[data-purchase-slug][hidden] { display: none; }
 .piece-social a { color: var(--purple); opacity: .75; }
 .piece-social a:hover { opacity: 1; }
 .piece-nav {

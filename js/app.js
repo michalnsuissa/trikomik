@@ -243,6 +243,26 @@
     );
   }
 
+  const checkoutBase = "https://trikomik-services.michal-trikomik.workers.dev/checkout/";
+  let stockRequest;
+  function refreshStock() {
+    const markers = $$("[data-stock-slug]");
+    if (!markers.length) return;
+    stockRequest ??= fetch(checkoutBase + "availability", { cache: "no-store" })
+      .then(response => response.ok ? response.json() : Promise.reject())
+      .finally(() => { stockRequest = undefined; });
+    stockRequest.then(stock => {
+      for (const marker of markers) {
+        const state = stock[marker.dataset.stockSlug];
+        marker.textContent = state === "paid" ? "SOLD OUT" : state ? "לא זמין כרגע" : "";
+        marker.hidden = !state;
+      }
+      $$("[data-purchase-slug]").forEach(control => { control.hidden = Boolean(stock[control.dataset.purchaseSlug]); });
+    }).catch(() => {});
+  }
+  window.addEventListener("pageshow", refreshStock);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) refreshStock(); });
+
   function renderGrid(cat) {
     document.querySelector(".shop-subnav")?.remove();
     document.querySelector(".gallery-head")?.insertAdjacentHTML("beforeend",shopSubnav(cat));
@@ -268,11 +288,13 @@
         <span class="card-body">
           <span class="card-cat">${p.category === "workshops" ? "סדנאות סריגה" : p.category === "birth" ? "מארז לידה" : p.category === "gifts" ? "מארזי מתנה" : p.category === "extras" ? "סלסלאות נוי ומוצרים משלימים" : "תיק סרוג"}</span>
           <span class="card-name">${p.name}</span>
+          ${p.category === "bags" ? `<strong class="stock-status" data-stock-slug="${p.slug}" hidden></strong>` : ""}
           <span class="card-more">לפרטים ←</span>
         </span>
       </a>`
       )
       .join("");
+    refreshStock();
   }
 
   /* ---------- piece detail ---------- */
@@ -284,6 +306,8 @@
     const next = TRIKOMIK.products[(idx + 1) % TRIKOMIK.products.length];
     const couponEligible = p.category !== "workshops" && !p.comingSoon && p.price > 0 && !(p.originalPrice > p.price);
     const pieceNote = p.category === "birth" ? p.note : p.note?.replace(/עלות משלוח לפי אזור החלוקה\.?/g, "").trim();
+    const directCheckout = !p.comingSoon && p.price > 0 && (p.category === "bags" || p.slug === "baby-treasure-small");
+    const orderDetails = !p.comingSoon && !["birth", "workshops"].includes(p.category) && p.price > 0;
 
     document.title = `${p.name} — TrikoMik`;
     const app = $("#app");
@@ -317,11 +341,10 @@
           <h1>${p.name}</h1>
           <p class="piece-price">${p.comingSoon ? "בקרוב" : p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</p>
           <p class="piece-made">${p.category === "workshops" ? "זמן לעצמך, ליווי אישי ויצירה בידיים" : "כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים"}</p>
-          <a class="btn btn-primary btn-block" id="piece-order" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנה</a>
-          ${p.slug === "baby-treasure-small" ? `
-            <a class="btn btn-outline btn-block" href="https://trikomik-services.michal-trikomik.workers.dev/checkout/baby-treasure-small">להזמנה ותשלום מאובטח</a>
-            <p class="piece-note">במסלול התשלום בוחרים איסוף או משלוח ותוספות, ורואים את הסכום הסופי לפני המעבר ל־HYP.</p>
-          ` : ""}
+          ${directCheckout ? `
+            <p class="stock-status" data-stock-slug="${p.slug}" role="status" hidden></p>
+            <a class="btn btn-primary btn-block" id="piece-checkout" data-purchase-slug="${p.slug}" href="${checkoutBase}${p.slug}">להזמנה ותשלום מאובטח</a>
+          ` : orderDetails ? `<a class="btn btn-primary btn-block" id="piece-checkout" href="/order/?product=${p.slug}">לפרטי ההזמנה</a>` : ""}
           ${couponEligible ? couponOptions() : ""}
           <a class="btn btn-outline btn-block" href="tel:${B.phone}">${ICONS.phone} לשיחה: ${B.phoneDisplay}</a>
           ${p.category !== "workshops" ? shippingOptions(p) : ""}
@@ -349,6 +372,7 @@
               : ""
           }
           ${p.category === "birth" ? birthExtras(p) : ""}
+          <a class="btn btn-outline btn-block piece-whatsapp" id="piece-order" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} רוצים לדבר איתי?</a>
           <div class="piece-social">
             <a href="${B.instagram}" target="_blank" rel="noopener">${ICONS.instagram}</a>
             <a href="${B.facebook}" target="_blank" rel="noopener">${ICONS.facebook}</a>
@@ -364,6 +388,8 @@
     `;
 
     const orderLink = $("#piece-order", app);
+    const checkoutLink = $("#piece-checkout", app);
+    refreshStock();
     const couponForm = $("#coupon-form", app);
     const couponInput = $("#coupon-code", app);
     const couponStatus = $("#coupon-status", app);
@@ -374,21 +400,31 @@
       : "");
     let updateOrder = () => { orderLink.href = waLink(orderMessage()); };
 
-    if (!p.comingSoon && !["birth", "workshops"].includes(p.category) && p.price > 0) {
+    if (orderDetails) {
       const deliveryForm = $("#product-delivery-form", app);
       const destination = $("#shipping-destination", deliveryForm);
       const deliveryStatus = $("#product-delivery-status", app);
       const couponField = $('input[name="coupon"]', deliveryForm);
-      orderLink.removeAttribute("target");
       updateOrder = () => {
         const query = new URLSearchParams({ product: p.slug });
         if (destination.value) query.set("delivery", destination.value);
         if (couponApplied) query.set("coupon", couponCode);
-        orderLink.href = "/order/?" + query;
+        const useDirect = directCheckout && (!destination.value || ["pickup", "ashdod"].includes(destination.value));
+        query.delete("product");
+        checkoutLink.href = useDirect ? checkoutBase + p.slug + "?" + query : "/order/?product=" + p.slug + "&" + query;
+        checkoutLink.textContent = useDirect ? "להזמנה ותשלום מאובטח" : "לפרטי ההזמנה";
+        orderLink.href = waLink(orderMessage());
         couponField.value = couponApplied ? couponCode : "";
       };
       updateOrder();
       destination.addEventListener("change", updateOrder);
+      if (directCheckout) deliveryForm.addEventListener("submit", event => {
+        if (checkoutLink.hidden) { event.preventDefault(); return; }
+        if (["pickup", "ashdod"].includes(destination.value)) {
+          event.preventDefault();
+          location.assign(checkoutLink.href);
+        }
+      });
       import("/js/shipping-order.js").then(({ loadShippingDestinations }) =>
         loadShippingDestinations(destination, deliveryStatus)
       ).catch(() => {
@@ -548,7 +584,7 @@
           <p>משלוח באשדוד ללא תשלום או איסוף עצמי באשדוד ללא תשלום בתיאום מראש.</p>
           <p>משלוח אקספרס של דואר ישראל ליישובים שברשימה. עד 1 ק״ג כולל אריזה ב־67 ש״ח, ומעל 1 ק״ג ועד 2 ק״ג ב־73 ש״ח.</p>
           ${!p.comingSoon && p.price > 0 ? `
-            <form id="product-delivery-form" action="/order/">
+            <form id="product-delivery-form" action="/order/" ${p.category === "bags" ? `data-purchase-slug="${p.slug}"` : ""}>
               <input type="hidden" name="product" value="${p.slug}">
               <input type="hidden" name="coupon">
               <label for="shipping-destination">איסוף עצמי או בחירת יישוב</label>
@@ -580,7 +616,6 @@
         <p class="extras-caption">התוספת כוללת בלון הליום אחד. התמונות להמחשת הדגמים.</p>
       </fieldset>
       <p class="extras-summary" role="status" aria-atomic="true"><span class="extras-total-label">סה״כ כולל התוספות:</span> <strong class="extras-total">${fmt(p.price)}</strong><small class="extras-delivery-note">לפני משלוח</small></p>
-      <a class="btn btn-primary btn-block" href="${waLink(waMsg(p))}" target="_blank" rel="noopener">${ICONS.whatsapp} להזמנת המארז עם הבחירות שלי</a>
     </section>`;
   }
 
