@@ -592,3 +592,12 @@ nav.top-nav a:hover::after, nav.top-nav a.active::after { width: 100%; }
 .piece-main > img[src*='lia-basket-label-fixed.png'], .card-media img[src*='lia-basket-label-fixed.png'] {object-fit:contain;background:white;}
 
 .piece-main > img[src$="merlot-bag.png"], .card-media img[src$="merlot-bag.png"] { object-fit: contain; background: white; }
+
+/* Sharing remains separate from the product link for keyboard and touch access. */
+.card-link { display: flex; flex-direction: column; flex: 1; color: inherit; }
+.product-share { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.card > .product-share { justify-content: center; padding: 0 .75rem 1rem; }
+.product-share-button { min-height: 44px; gap: .4rem; }
+.product-share-button:disabled { opacity: .65; cursor: wait; }
+.product-share-status { font-size: .85rem; color: var(--purple-deep); }
+.piece-info > .product-share { margin-block: .75rem; }

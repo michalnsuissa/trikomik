@@ -78,6 +78,40 @@
     return base;
   }
 
+  /* ---------- product sharing ---------- */
+  const shareIcon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg>';
+  function shareButton(p) {
+    return `<div class="product-share"><button type="button" class="btn btn-outline product-share-button" data-share-slug="${p.slug}">${shareIcon} שיתוף</button><span class="product-share-status" role="status" aria-live="polite"></span></div>`;
+  }
+  document.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-share-slug]");
+    if (!button) return;
+    const p = TRIKOMIK.products.find(p => p.slug === button.dataset.shareSlug);
+    if (!p) return;
+    const status = button.parentElement.querySelector(".product-share-status");
+    const url = `https://trikomik.com/products/${encodeURIComponent(p.slug)}/`;
+    status.textContent = "";
+    button.disabled = true;
+    try {
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: `${p.name} | TrikoMik`, url });
+          return;
+        } catch (error) {
+          if (error.name === "AbortError") return;
+        }
+      }
+      try {
+        await navigator.clipboard.writeText(url);
+        status.textContent = "הקישור הועתק";
+      } catch {
+        window.prompt("העתיקו את הקישור למוצר:", url);
+      }
+    } finally {
+      button.disabled = false;
+    }
+  });
+
   /* ---------- home ---------- */
   function home() {
     const aboutIntro = B.description.replace(/^ברוכים הבאים ל-TrikoMik 💜 /, "");
@@ -281,7 +315,8 @@
     $("#grid").innerHTML = items
       .map(
         (p, i) => `
-      <a class="card ${p.category === "birth" ? "card-tall" : ""}" href="#/piece/${p.slug}" style="--i:${i}; animation-delay:${Math.min(i * 35, 280)}ms">
+      <article class="card ${p.category === "birth" ? "card-tall" : ""}" style="--i:${i}; animation-delay:${Math.min(i * 35, 280)}ms">
+      <a class="card-link" href="#/piece/${p.slug}">
         <span class="card-media">
           <img src="${p.images[0]}" alt="${p.name}" loading="lazy" style="--tint:${p.color}">
           <span class="card-price">${p.comingSoon ? "בקרוב" : p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</span>
@@ -297,7 +332,9 @@
           ${p.category === "bags" ? `<strong class="stock-status" data-stock-slug="${p.slug}" hidden></strong>` : ""}
           <span class="card-more">לפרטים ←</span>
         </span>
-      </a>`
+      </a>
+      ${shareButton(p)}
+      </article>`
       )
       .join("");
     refreshStock();
@@ -346,6 +383,7 @@
         <div class="piece-info">
           <p class="piece-kicker">${p.category === "workshops" ? "סדנאות סריגה" : p.category === "birth" ? "מארז לידה בעבודת יד" : p.category === "gifts" ? "מארז מתנה בעבודת יד" : p.category === "extras" ? "מוצר משלים בעבודת יד" : "תיק סרוג בעבודת יד"}</p>
           <h1>${p.name}</h1>
+          ${shareButton(p)}
           <p class="piece-price">${p.comingSoon ? "בקרוב" : p.originalPrice ? `<del aria-label="מחיר מקורי">${fmt(p.originalPrice)}</del> <span aria-label="מחיר מבצע">${fmt(p.price)}</span>` : fmt(p.price)}</p>
           <p class="piece-made">${p.category === "workshops" ? "זמן לעצמך, ליווי אישי ויצירה בידיים" : "כל פריט נסרג בעבודת יד באהבה והקפדה על הפרטים הקטנים"}</p>
           ${directCheckout ? `
