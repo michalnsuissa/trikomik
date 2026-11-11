@@ -392,6 +392,7 @@
             `<a class="btn btn-primary btn-block" id="piece-checkout" data-purchase-slug="${p.slug}" href="${checkoutBase}${p.slug}">להזמנה ותשלום מאובטח</a>`}
           ` : orderDetails ? `<a class="btn btn-primary btn-block" id="piece-checkout" href="/order/?product=${p.slug}">לפרטי ההזמנה</a>` : ""}
           ${couponEligible ? couponOptions() : ""}
+          ${p.slug === "beginner-crochet-workshop" ? TRIKOMIK.workshopCancellation : ""}
           <a class="btn btn-outline btn-block" href="tel:${B.phone}">${ICONS.phone} לשיחה: ${B.phoneDisplay}</a>
           ${!birth && p.category !== "workshops" ? shippingOptions(p) : ""}
           <div class="piece-desc">
