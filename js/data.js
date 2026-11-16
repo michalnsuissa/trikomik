@@ -411,6 +411,38 @@ const TRIKOMIK = {
   "originalPrice": 180
 },
 {
+  "slug": "orli-clutch",
+  "name": "ORLI | תיק קלאץ׳ סרוג בעבודת יד",
+  "shortName": "ORLI",
+  "category": "bags",
+  "price": 320,
+  "images": [
+    "img/orli-clutch.png"
+  ],
+  "color": "#c8e1ea",
+  "description": [
+    "תיק קלאץ׳ סרוג בגווני בננה ותכלת, עם ידית קלאץ׳ המשולבת בגוף התיק. מתאים ליציאה בערב או להוספת נגיעה של צבע למראה יומיומי."
+  ],
+  "specs": [
+    {
+      "label": "אורך הבסיס התחתון",
+      "value": "27 ס״מ"
+    },
+    {
+      "label": "רוחב הבסיס התחתון",
+      "value": "13 ס״מ"
+    },
+    {
+      "label": "גובה",
+      "value": "19 ס״מ"
+    },
+    {
+      "label": "משקל",
+      "value": "413 גרם"
+    }
+  ]
+},
+{
   "slug": "luna-pouch",
   "name": "Luna — פאוץ׳ סרוג",
   "shortName": "Luna",
