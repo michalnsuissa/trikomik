@@ -412,8 +412,8 @@ const TRIKOMIK = {
 },
 {
   "slug": "orli-clutch",
-  "name": "ORLI | תיק קלאץ׳ סרוג בעבודת יד",
-  "shortName": "ORLI",
+  "name": "ORLY | תיק קלאץ׳ סרוג בעבודת יד",
+  "shortName": "ORLY",
   "category": "bags",
   "price": 320,
   "images": [
