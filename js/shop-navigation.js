@@ -10,3 +10,22 @@ function shopMatches(p,sub){if(!sub)return true; const groups={girls:['bunny','f
 function shopSubnav(cat){const c=SHOP_NAV.find(c=>c.id===cat);if(!c?.children.length)return '';let sub=new URLSearchParams(location.search).get('sub');return '<nav class="shop-subnav" aria-label="תתי קטגוריות"><a class="'+(!sub?'selected':'')+'" href="'+shopHref(cat)+'">הכול בקטגוריה</a>'+c.children.map(([id,label])=>'<a class="'+(sub===id?'selected':'')+'" href="'+shopHref(cat,id)+'" '+(sub===id?'aria-current="page"':'')+'>'+label+'</a>').join('')+'</nav>';}
 function shopTiles(){return '<div class="shop-intro"><span>פריטים קטנים, הרבה אהבה</span><h2>מה תרצו למצוא היום?</h2><p>בחרו קטגוריה וגלו את הפריטים שנסרגו בשבילכם</p></div><div class="shop-category-tiles">'+SHOP_NAV.map(c=>{const p=TRIKOMIK.products.find(p=>p.slug===c.image);return '<a href="'+shopHref(c.id)+'"><img src="'+p.images[0]+'" alt="" loading="lazy"><span>'+c.label+'</span><small>לכל הפריטים ←</small></a>';}).join('')+'</div>';}
 (()=>{const header=document.querySelector('.site-header');header.insertAdjacentHTML('beforeend','<div class="shop-navigation container"><details class="mobile-shop"><summary>☰ &nbsp; קטגוריות החנות</summary><div class="shop-menu-items"></div></details><nav class="desktop-shop" aria-label="קטגוריות ותתי קטגוריות"></nav></div>');const menu=SHOP_NAV.map(c=>c.children.length?'<details class="shop-menu-group"><summary>'+c.label+' <span>⌄</span></summary><div class="shop-dropdown"><a href="'+shopHref(c.id)+'">כל '+c.label+'</a>'+c.children.map(([id,label])=>'<a href="'+shopHref(c.id,id)+'">'+label+'</a>').join('')+'</div></details>':'<a class="shop-menu-single" href="'+shopHref(c.id)+'">'+c.label+'</a>').join('');document.querySelector('.desktop-shop').innerHTML=menu;document.querySelector('.shop-menu-items').innerHTML=menu;document.addEventListener('click',e=>{document.querySelectorAll('.desktop-shop details[open]').forEach(d=>{if(!d.contains(e.target))d.open=false;});});document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.shop-navigation details[open]').forEach(d=>d.open=false);});})();
+
+(() => {
+  const start = Date.parse("2026-11-25T00:00:00+02:00");
+  const end = Date.parse("2026-12-01T00:00:00+02:00");
+  let frame;
+  const update = () => {
+    const active = Date.now() >= start && Date.now() < end;
+    if (active && !frame) {
+      frame = document.createElement("iframe");
+      frame.src = "/black-friday-banner.html";
+      frame.title = "מבצע Black Friday — 20% הנחה";
+      frame.style.cssText = "display:block;width:100%;height:235px;border:0";
+      document.querySelector(".site-header").after(frame);
+    }
+    if (!active && frame) { frame.remove(); frame = null; }
+  };
+  update();
+  setInterval(update, 1000);
+})();

@@ -6,8 +6,8 @@
   const waMsg = (p) =>
     `שלום מיכל! אני מתעניינ/ת ב${p.name} מהאתר של TrikoMik 💜`;
   const couponCode = "TRIKO20";
-  const couponStarts = Date.parse("2026-11-27T00:00:00+02:00");
-  const couponEnds = Date.parse("2026-11-28T00:00:00+02:00");
+  const couponStarts = Date.parse("2026-11-25T00:00:00+02:00");
+  const couponEnds = Date.parse("2026-12-01T00:00:00+02:00");
 
   /* ---------- router ---------- */
   const routes = {
@@ -531,9 +531,10 @@
         event.preventDefault();
         const now = Date.now();
         const code = couponInput.value.trim().toUpperCase();
-        couponApplied = code === couponCode && now >= couponStarts && now < couponEnds;
-        if (code !== couponCode) updateCoupon("הקוד שהוזן אינו תקף.");
-        else if (now < couponStarts) updateCoupon("הקופון יהיה תקף ביום שישי, 27.11.2026, לפי שעון ישראל.");
+        couponApplied = p.category !== "birth" && code === couponCode && now >= couponStarts && now < couponEnds;
+        if (p.category === "birth") updateCoupon("הקופון אינו חל על מארזי לידה.");
+        else if (code !== couponCode) updateCoupon("הקוד שהוזן אינו תקף.");
+        else if (now < couponStarts) updateCoupon("הקופון תקף מ־25.11.2026 עד סוף 30.11.2026, לפי שעון ישראל.");
         else if (!couponApplied) updateCoupon("תוקף הקופון הסתיים.");
         else updateCoupon(`הקופון הוחל. מחיר המוצר לאחר 20% הנחה: ${fmt(productPrice())}.`);
       });
