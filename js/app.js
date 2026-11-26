@@ -350,7 +350,7 @@
     const couponEligible = p.category !== "workshops" && !p.comingSoon && p.price > 0 && !(p.originalPrice > p.price);
     const pieceNote = p.category === "birth" ? p.note : p.note?.replace(/עלות משלוח לפי אזור החלוקה\.?/g, "").trim();
     const birth = p.category === "birth";
-    const directCheckout = !p.comingSoon && p.price > 0 && (p.category === "bags" || birth);
+    const directCheckout = p.checkoutAvailable !== false && !p.comingSoon && p.price > 0 && (p.category === "bags" || birth);
     const orderDetails = !p.comingSoon && !["birth", "workshops"].includes(p.category) && p.price > 0;
 
     document.title = `${p.name} — TrikoMik`;
